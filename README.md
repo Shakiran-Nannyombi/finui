@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./public/banner.svg" alt="Finui built with Google AI Studio" />
+</p>
+
 # Finui - Financial Power for the Informal Economy
 
 Finui is a financial inclusion application designed specifically for informal workers, such as market vendors, boda boda riders, and tailors. Millions of informal workers lack access to traditional banking and credit facilities because they don't have formal pay slips or predictable monthly salaries. Finui bridges this gap by using alternative data—like mobile money transaction patterns—to build a verifiable "Trust Score."

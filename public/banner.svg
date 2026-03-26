@@ -1,0 +1,21 @@
+<svg width="600" height="100" viewBox="0 0 600 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="598" height="98" x="1" y="1" rx="15" fill="#0f172a" stroke="#1e293b" stroke-width="2"/>
+  
+  <!-- Finui Logo -->
+  <g transform="translate(60, 26) scale(1.5)">
+    <path d="M16 2L2 9L16 16L30 9L16 2Z" fill="#10B981"/>
+    <path d="M2 23L16 30L30 23V9L16 16L2 9V23Z" fill="#059669"/>
+    <path d="M16 16L30 9V23L16 30V16Z" fill="#047857"/>
+  </g>
+  <text x="120" y="58" fill="white" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="bold">Finui</text>
+  
+  <!-- Divider / Text -->
+  <text x="215" y="56" fill="#94a3b8" font-family="system-ui, -apple-system, sans-serif" font-size="16">built with</text>
+  
+  <!-- Google AI Studio -->
+  <g transform="translate(305, 35)">
+    <path d="M15 0C15 8.284 8.284 15 0 15C8.284 15 15 21.716 15 30C15 21.716 21.716 15 30 15C21.716 15 15 8.284 15 0Z" fill="#a855f7"/>
+    <path d="M26 5C26 7.761 23.761 10 21 10C23.761 10 26 12.239 26 15C26 12.239 28.239 10 31 10C28.239 10 26 7.761 26 5Z" fill="#3b82f6"/>
+  </g>
+  <text x="350" y="58" fill="white" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="bold">Google AI Studio</text>
+</svg>
