@@ -1,9 +1,14 @@
+import 'dotenv/config';
 import express from 'express';
 import { createServer as createViteServer } from 'vite';
+import { GoogleGenAI } from '@google/genai';
 import path from 'path';
 
 const app = express();
 app.use(express.json());
+
+// --- Gemini AI Setup ---
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
 
 // --- Mock Database & Data Generator ---
 interface Transaction {
@@ -123,6 +128,81 @@ const calculateTrustScore = (userId: string) => {
   };
 };
 
+const getAIInsights = async (user: User, txs: Transaction[]) => {
+  if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === 'MY_GEMINI_API_KEY') {
+    return "Complete your profile and keep saving to build your financial future.";
+  }
+
+  const recentTxs = txs.slice(0, 20).map(t => `${new Date(t.date).toLocaleDateString()}: ${t.type === 'credit' ? '+' : '-'} UGX ${t.amount} (${t.category})`).join('\n');
+  
+  const prompt = `
+    As a friendly financial advisor for a Ugandan informal worker named ${user.name} who runs a ${user.businessType} business, 
+    analyze these recent transactions and provide a short, motivating 2-sentence recommendation to help them improve their Trust Score and savings.
+    
+    Current Balance: UGX ${user.balance}
+    Current Savings: UGX ${user.savingsBalance}
+    
+    Recent Transactions:
+    ${recentTxs}
+    
+    Return ONLY the 2-sentence recommendation.
+  `;
+
+  try {
+    const result = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: [{ role: 'user', parts: [{ text: prompt }] }]
+    });
+    return result.text.trim();
+  } catch (err) {
+    console.error("Gemini AI Error:", err);
+    return "Great effort this week! Maintain your savings daily to reach your next credit tier.";
+  }
+};
+
+const getAISavingsNudge = async (user: User, txs: Transaction[]) => {
+  if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === 'MY_GEMINI_API_KEY') {
+    return { suggestedAmount: 0, message: "Start tracking your income to get personalized savings tips." };
+  }
+
+  const recentIncome = txs.filter(t => t.type === 'credit' && new Date(t.date).getTime() > Date.now() - 7 * 24 * 60 * 60 * 1000);
+  const totalRecentIncome = recentIncome.reduce((a, b) => a + b.amount, 0);
+  
+  if (totalRecentIncome === 0) {
+    return { suggestedAmount: 0, message: "Waiting for your next income to suggest a savings amount." };
+  }
+
+  const prompt = `
+    As a helpful financial assistant for ${user.name}, who is a ${user.businessType} in Uganda.
+    They earned UGX ${totalRecentIncome} in the last 7 days. 
+    Suggest a small, comfortable savings amount (between 5% and 15% of income, rounded to nearest 1000 UGX).
+    Provide the response in JSON format: {"suggestedAmount": number, "message": "string (one short sentence)"}.
+    The message should be encouraging and specific to their business if possible.
+  `;
+
+  try {
+    const result = await ai.models.generateContent({
+      model: 'gemini-2.0-flash',
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      config: { responseMimeType: 'application/json' }
+    });
+    
+    // Safely parse the JSON response
+    const data = JSON.parse(result.text);
+    return {
+      suggestedAmount: Number(data.suggestedAmount) || 0,
+      message: data.message || "Consider saving a portion of your recent earnings."
+    };
+  } catch (err) {
+    console.error("Gemini AI Nudge Error:", err);
+    const fallbackAmount = Math.round((totalRecentIncome * 0.1) / 1000) * 1000;
+    return { 
+      suggestedAmount: fallbackAmount, 
+      message: `You earned well recently! Saving UGX ${fallbackAmount.toLocaleString()} today will build your future.` 
+    };
+  }
+};
+
 // --- API Endpoints ---
 
 // Auth Endpoints
@@ -185,8 +265,15 @@ app.get('/api/transactions/:userId', (req, res) => {
   res.json(transactions[req.params.userId] || []);
 });
 
-app.get('/api/trust-score/:userId', (req, res) => {
-  res.json(calculateTrustScore(req.params.userId));
+app.get('/api/trust-score/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  const user = users[userId];
+  const txs = transactions[userId] || [];
+  
+  const score = calculateTrustScore(userId);
+  const aiInsights = await getAIInsights(user, txs);
+  
+  res.json({ ...score, recommendation: aiInsights });
 });
 
 app.post('/api/savings/transfer', (req, res) => {
@@ -217,20 +304,18 @@ app.post('/api/savings/transfer', (req, res) => {
   res.json({ success: true, user });
 });
 
-app.get('/api/savings/recommendation/:userId', (req, res) => {
-  const userTxs = transactions[req.params.userId] || [];
-  const recentIncome = userTxs.filter(t => t.type === 'credit' && new Date(t.date).getTime() > Date.now() - 3 * 24 * 60 * 60 * 1000);
+app.get('/api/savings/recommendation/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  const user = users[userId];
+  const userTxs = transactions[userId] || [];
   
-  if (recentIncome.length > 0) {
-    const totalRecentIncome = recentIncome.reduce((a, b) => a + b.amount, 0);
-    const suggestedAmount = Math.round((totalRecentIncome * 0.1) / 1000) * 1000; // Suggest saving 10% of recent income, rounded to nearest 1000 UGX
-    res.json({
-      suggestedAmount,
-      message: `You had a good income recently! Consider saving UGX ${suggestedAmount.toLocaleString()} to build your Trust Score.`
-    });
-  } else {
-    res.json({ suggestedAmount: 0, message: "Waiting for next income to suggest savings." });
+  if (!user) {
+    res.status(404).json({ error: 'User not found' });
+    return;
   }
+
+  const nudge = await getAISavingsNudge(user, userTxs);
+  res.json(nudge);
 });
 
 // --- Vite Middleware ---
@@ -249,8 +334,8 @@ async function startServer() {
     });
   }
 
-  const PORT = 3000;
-  app.listen(PORT, '0.0.0.0', () => {
+  const PORT = process.env.PORT || 3000;
+  app.listen(Number(PORT), '0.0.0.0', () => {
     console.log(`Server running on http://localhost:${PORT}`);
   });
 }

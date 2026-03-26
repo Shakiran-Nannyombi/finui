@@ -220,20 +220,11 @@ function LandingPage({ onGetStarted }: { onGetStarted: () => void }) {
               </div>
             </div>
           </motion.div>
-
         </div>
-      </div>
-
+      
       {/* How it Works Section */}
-      <div className="relative">
-        {/* Creative Top Edge */}
-        <div className="absolute top-0 left-0 w-full h-24 -translate-y-full overflow-hidden pointer-events-none">
-          <svg className="absolute bottom-0 w-full h-24 text-[#0f172a]" viewBox="0 0 1440 100" fill="currentColor" preserveAspectRatio="none">
-            <path d="M0,100 C480,0 960,0 1440,100 L1440,100 L0,100 Z" />
-          </svg>
-        </div>
-
-        <div className="bg-[#0f172a] py-24 w-full relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-[#0f172a] rounded-[3rem] py-24 w-full relative overflow-hidden shadow-2xl shadow-slate-900/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="mb-16 md:text-left text-center">
             <p className="text-slate-400 font-bold tracking-[0.2em] text-sm uppercase mb-4">How Finui Works</p>
@@ -339,15 +330,8 @@ function LandingPage({ onGetStarted }: { onGetStarted: () => void }) {
     </div>
 
       {/* Smart AI Section */}
-      <div className="relative">
-        {/* Creative Top Edge - Slanted */}
-        <div className="absolute top-0 left-0 w-full h-32 -translate-y-full overflow-hidden pointer-events-none">
-          <svg className="absolute bottom-0 w-full h-32 text-[#080c14]" viewBox="0 0 1440 100" fill="currentColor" preserveAspectRatio="none">
-            <path d="M0,100 L1440,0 L1440,100 Z" />
-          </svg>
-        </div>
-
-        <div className="bg-[#080c14] py-24 w-full relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24">
+        <div className="bg-[#080c14] rounded-[3rem] py-24 w-full relative overflow-hidden shadow-2xl shadow-slate-900/40">
         {/* Background elements */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-600/20 rounded-full mix-blend-screen filter blur-[100px]"></div>
@@ -447,13 +431,15 @@ function LandingPage({ onGetStarted }: { onGetStarted: () => void }) {
 
           </div>
         </div>
+      </div>
 
-        {/* CTA Section for About Page */}
+      {/* CTA Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24 pb-24">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-32 bg-emerald-900 rounded-[3rem] p-12 md:p-20 text-center text-white relative overflow-hidden shadow-2xl"
+          className="bg-emerald-900 rounded-[3rem] p-12 md:p-20 text-center text-white relative overflow-hidden shadow-2xl"
         >
           <div className="absolute inset-0 z-0">
             <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/20 rounded-full -mr-20 -mt-20 blur-3xl"></div>
