@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Home, PiggyBank, User as UserIcon, TrendingUp, ArrowRight, ShieldCheck, AlertCircle, LayoutDashboard, Wallet } from 'lucide-react';
+import { Home, PiggyBank, User as UserIcon, TrendingUp, ArrowRight, ShieldCheck, AlertCircle, LayoutDashboard, Wallet, Info } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip } from 'recharts';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -37,6 +37,114 @@ interface TrustScore {
 }
 
 // --- Components ---
+
+function LandingPage({ onGetStarted }: { onGetStarted: () => void }) {
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+      {/* Hero Section */}
+      <div className="relative bg-emerald-900 rounded-[3rem] overflow-hidden text-white p-10 md:p-20 flex flex-col items-center text-center shadow-2xl">
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+          <div className="absolute -top-24 -left-24 w-96 h-96 bg-emerald-600 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse"></div>
+          <div className="absolute top-0 -right-24 w-96 h-96 bg-teal-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute -bottom-24 left-20 w-96 h-96 bg-green-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse" style={{ animationDelay: '4s' }}></div>
+        </div>
+        <div className="relative z-10 max-w-3xl">
+          <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-6 leading-tight">
+            Financial Power for the <span className="text-emerald-300">Informal Economy</span>
+          </h1>
+          <p className="text-xl md:text-2xl text-emerald-100 mb-10 font-medium">
+            Build your Trust Score, automate micro-savings, and unlock credit tiers without a traditional bank history.
+          </p>
+          <button 
+            onClick={onGetStarted}
+            className="bg-white text-emerald-900 px-8 py-4 rounded-full text-lg font-bold hover:bg-emerald-50 hover:scale-105 transition-all shadow-xl flex items-center gap-2 mx-auto"
+          >
+            Enter Dashboard <ArrowRight size={20} />
+          </button>
+        </div>
+      </div>
+
+      {/* Features */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:border-emerald-200 transition-colors">
+          <div className="bg-emerald-100 w-14 h-14 rounded-2xl flex items-center justify-center text-emerald-600 mb-6">
+            <ShieldCheck size={28} />
+          </div>
+          <h3 className="text-xl font-bold text-gray-900 mb-3">Trust Score Engine</h3>
+          <p className="text-gray-600 leading-relaxed">We analyze your income regularity and savings stability to generate a reliable credit score.</p>
+        </div>
+        <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:border-emerald-200 transition-colors">
+          <div className="bg-blue-100 w-14 h-14 rounded-2xl flex items-center justify-center text-blue-600 mb-6">
+            <PiggyBank size={28} />
+          </div>
+          <h3 className="text-xl font-bold text-gray-900 mb-3">Micro-Savings</h3>
+          <p className="text-gray-600 leading-relaxed">Smart AI nudges help you save small amounts when you earn, building your wealth effortlessly.</p>
+        </div>
+        <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:border-emerald-200 transition-colors">
+          <div className="bg-purple-100 w-14 h-14 rounded-2xl flex items-center justify-center text-purple-600 mb-6">
+            <TrendingUp size={28} />
+          </div>
+          <h3 className="text-xl font-bold text-gray-900 mb-3">Credit Unlocks</h3>
+          <p className="text-gray-600 leading-relaxed">Level up your credit tiers by maintaining a good Trust Score and consistent savings habits.</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AboutPage() {
+  return (
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+      <div className="text-center space-y-4">
+        <h1 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight">About Finui</h1>
+        <p className="text-xl text-gray-500 font-medium">Empowering informal workers through accessible financial tools.</p>
+      </div>
+
+      <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-gray-100">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">Our Mission</h2>
+        <p className="text-gray-600 text-lg leading-relaxed mb-8">
+          Millions of informal workers lack access to traditional banking and credit facilities because they don't have formal pay slips or predictable monthly salaries. Finui bridges this gap by using alternative data—like mobile money transaction patterns—to build a verifiable "Trust Score."
+        </p>
+
+        <h2 className="text-2xl font-bold text-gray-900 mb-6 border-t border-gray-100 pt-8">How to Use Finui</h2>
+        
+        <div className="space-y-8">
+          <div className="flex gap-4">
+            <div className="shrink-0 w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold text-xl">1</div>
+            <div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Track Your Transactions</h3>
+              <p className="text-gray-600 leading-relaxed">Connect your mobile money account. Finui automatically categorizes your daily income and expenses to understand your cash flow.</p>
+            </div>
+          </div>
+          
+          <div className="flex gap-4">
+            <div className="shrink-0 w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold text-xl">2</div>
+            <div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Monitor Your Trust Score</h3>
+              <p className="text-gray-600 leading-relaxed">Check the Dashboard to see your Trust Score. It improves based on three factors: Income Regularity, Consistency, and Savings Stability.</p>
+            </div>
+          </div>
+
+          <div className="flex gap-4">
+            <div className="shrink-0 w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold text-xl">3</div>
+            <div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Follow Smart Savings Nudges</h3>
+              <p className="text-gray-600 leading-relaxed">Visit the Savings tab. Our AI detects when you've had a good income day and suggests a small, manageable amount to save.</p>
+            </div>
+          </div>
+
+          <div className="flex gap-4">
+            <div className="shrink-0 w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold text-xl">4</div>
+            <div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Unlock Credit Tiers</h3>
+              <p className="text-gray-600 leading-relaxed">As your Trust Score grows and your savings balance increases, you will automatically unlock higher credit tiers, giving you access to micro-loans when you need them.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function Dashboard({ user, score, transactions }: { user: User | null, score: TrustScore | null, transactions: Transaction[] }) {
   if (!user || !score) return <div className="p-12 flex justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div></div>;
@@ -351,7 +459,7 @@ function SavingsFlow({ user, onTransferSuccess }: { user: User | null, onTransfe
 }
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'home' | 'savings' | 'profile'>('home');
+  const [activeTab, setActiveTab] = useState<'landing' | 'home' | 'savings' | 'about' | 'profile'>('landing');
   const [user, setUser] = useState<User | null>(null);
   const [score, setScore] = useState<TrustScore | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -382,7 +490,7 @@ export default function App() {
       <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-20">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveTab('landing')}>
               <div className="bg-emerald-600 p-2.5 rounded-xl text-white shadow-md shadow-emerald-200">
                 <TrendingUp size={28} strokeWidth={2.5} />
               </div>
@@ -391,6 +499,16 @@ export default function App() {
             
             {/* Desktop Nav Links */}
             <div className="hidden md:flex items-center space-x-2">
+              <button 
+                onClick={() => setActiveTab('landing')} 
+                className={cn(
+                  "px-4 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2", 
+                  activeTab === 'landing' ? "bg-emerald-50 text-emerald-700" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                )}
+              >
+                <Home size={18} />
+                Home
+              </button>
               <button 
                 onClick={() => setActiveTab('home')} 
                 className={cn(
@@ -410,6 +528,16 @@ export default function App() {
               >
                 <PiggyBank size={18} />
                 Savings
+              </button>
+              <button 
+                onClick={() => setActiveTab('about')} 
+                className={cn(
+                  "px-4 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2", 
+                  activeTab === 'about' ? "bg-emerald-50 text-emerald-700" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                )}
+              >
+                <Info size={18} />
+                About
               </button>
               <button 
                 onClick={() => setActiveTab('profile')} 
@@ -438,8 +566,10 @@ export default function App() {
 
       {/* Main Content Area */}
       <main className="pb-20 md:pb-8">
+        {activeTab === 'landing' && <LandingPage onGetStarted={() => setActiveTab('home')} />}
         {activeTab === 'home' && <Dashboard user={user} score={score} transactions={transactions} />}
         {activeTab === 'savings' && <SavingsFlow user={user} onTransferSuccess={fetchData} />}
+        {activeTab === 'about' && <AboutPage />}
         {activeTab === 'profile' && (
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col items-center justify-center text-gray-500">
             <div className="bg-white p-8 rounded-full shadow-sm border border-gray-100 mb-6">
@@ -454,6 +584,17 @@ export default function App() {
       {/* Mobile Bottom Navigation (Only visible on small screens) */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-3 flex justify-between items-center z-50 pb-safe">
         <button 
+          onClick={() => setActiveTab('landing')}
+          className={cn(
+            "flex flex-col items-center gap-1 p-2 transition-colors",
+            activeTab === 'landing' ? "text-emerald-600" : "text-gray-400 hover:text-gray-600"
+          )}
+        >
+          <Home size={24} className={activeTab === 'landing' ? "fill-emerald-100" : ""} />
+          <span className="text-[10px] font-bold">Home</span>
+        </button>
+
+        <button 
           onClick={() => setActiveTab('home')}
           className={cn(
             "flex flex-col items-center gap-1 p-2 transition-colors",
@@ -461,7 +602,7 @@ export default function App() {
           )}
         >
           <LayoutDashboard size={24} className={activeTab === 'home' ? "fill-emerald-100" : ""} />
-          <span className="text-[10px] font-bold">Home</span>
+          <span className="text-[10px] font-bold">Dashboard</span>
         </button>
         
         <button 
@@ -475,6 +616,17 @@ export default function App() {
           <span className="text-[10px] font-bold">Savings</span>
         </button>
         
+        <button 
+          onClick={() => setActiveTab('about')}
+          className={cn(
+            "flex flex-col items-center gap-1 p-2 transition-colors",
+            activeTab === 'about' ? "text-emerald-600" : "text-gray-400 hover:text-gray-600"
+          )}
+        >
+          <Info size={24} className={activeTab === 'about' ? "fill-emerald-100" : ""} />
+          <span className="text-[10px] font-bold">About</span>
+        </button>
+
         <button 
           onClick={() => setActiveTab('profile')}
           className={cn(
