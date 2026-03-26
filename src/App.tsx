@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Home, PiggyBank, User as UserIcon, TrendingUp, ArrowRight, ShieldCheck, AlertCircle, LayoutDashboard, Wallet, Info, Download, Shield, Users } from 'lucide-react';
+import { Home, PiggyBank, User as UserIcon, TrendingUp, ArrowRight, ShieldCheck, AlertCircle, LayoutDashboard, Wallet, Info, Download, Shield, Users, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip } from 'recharts';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -17,13 +18,35 @@ const Logo = ({ className }: { className?: string }) => (
 );
 
 const Footer = () => (
-  <footer className="bg-white border-t border-gray-200 mt-auto py-8 pb-24 md:pb-8">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
-      <div className="flex items-center gap-2">
-        <Logo className="w-6 h-6" />
-        <span className="text-lg font-black tracking-tight text-gray-900">Finui</span>
+  <footer className="relative bg-white border-t border-gray-100 mt-auto pt-20 pb-24 md:pb-12 overflow-hidden">
+    {/* Creative Top Edge for Footer */}
+    <div className="absolute top-0 left-0 w-full h-12 overflow-hidden pointer-events-none">
+      <svg className="absolute top-0 w-full h-12 text-gray-50" viewBox="0 0 1440 100" fill="currentColor" preserveAspectRatio="none">
+        <path d="M0,0 C480,100 960,100 1440,0 L1440,0 L0,0 Z" />
+      </svg>
+    </div>
+
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="flex flex-col items-center md:items-start gap-4">
+          <div className="flex items-center gap-3">
+            <Logo className="w-8 h-8" />
+            <span className="text-2xl font-black tracking-tight text-gray-900">Finui</span>
+          </div>
+          <p className="text-gray-500 text-sm max-w-xs text-center md:text-left">
+            Empowering the unbanked hustle with AI-driven trust and financial inclusion.
+          </p>
+        </div>
+        
+        <div className="flex flex-col items-center md:items-end gap-4">
+          <div className="flex gap-6">
+            <a href="#" className="text-gray-400 hover:text-emerald-600 transition-colors">Twitter</a>
+            <a href="#" className="text-gray-400 hover:text-emerald-600 transition-colors">LinkedIn</a>
+            <a href="#" className="text-gray-400 hover:text-emerald-600 transition-colors">Contact</a>
+          </div>
+          <p className="text-sm text-gray-400 font-medium">© {new Date().getFullYear()} Finui Financial. Built with Google AI Studio.</p>
+        </div>
       </div>
-      <p className="text-sm text-gray-500">© {new Date().getFullYear()} Finui Financial. All rights reserved.</p>
     </div>
   </footer>
 );
@@ -63,8 +86,14 @@ interface TrustScore {
 
 function LandingPage({ onGetStarted }: { onGetStarted: () => void }) {
   return (
-    <div className="flex flex-col gap-24 pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 space-y-16 w-full">
+    <div className="flex flex-col gap-24 pb-12 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 space-y-16 w-full relative">
+        {/* Background Blobs for Hero */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 pointer-events-none">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-500/10 rounded-full blur-[120px] animate-pulse"></div>
+          <div className="absolute bottom-[20%] right-[-5%] w-[30%] h-[30%] bg-blue-500/10 rounded-full blur-[100px]"></div>
+        </div>
+
         {/* Hero Section */}
         <div className="relative bg-emerald-900 rounded-[3rem] overflow-hidden text-white p-10 md:p-20 flex flex-col items-center text-center shadow-2xl">
           <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
@@ -92,7 +121,12 @@ function LandingPage({ onGetStarted }: { onGetStarted: () => void }) {
         <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
           
           {/* Trust Score Engine */}
-          <div className="md:col-span-3 bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 relative group">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="md:col-span-3 bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 relative group"
+          >
             <div className="p-8 pb-0">
               <div className="relative mx-auto flex aspect-square size-32 rounded-full border border-emerald-100 before:absolute before:-inset-2 before:rounded-full before:border before:border-emerald-50 bg-emerald-50/50 items-center justify-center">
                 <ShieldCheck className="size-12 text-emerald-500" strokeWidth={1.5} />
@@ -105,10 +139,16 @@ function LandingPage({ onGetStarted }: { onGetStarted: () => void }) {
                 <p className="text-gray-600 leading-relaxed">We analyze your income regularity and savings stability to generate a reliable credit score.</p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Micro-Savings */}
-          <div className="md:col-span-3 bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 relative group">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="md:col-span-3 bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 relative group"
+          >
             <div className="p-8 pb-0">
               <div className="relative flex h-32 w-full items-center justify-center">
                 <svg className="absolute inset-0 h-full w-full text-blue-100" viewBox="0 0 254 104" fill="none">
@@ -132,10 +172,16 @@ function LandingPage({ onGetStarted }: { onGetStarted: () => void }) {
                 <p className="text-gray-600 leading-relaxed">Smart AI nudges help you save small amounts when you earn, building your wealth effortlessly.</p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Credit Unlocks */}
-          <div className="md:col-span-6 bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 relative group">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="md:col-span-6 bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 relative group"
+          >
             <div className="grid md:grid-cols-2 h-full">
               <div className="p-8 md:p-12 flex flex-col justify-center space-y-6">
                 <div className="relative flex aspect-square size-16 rounded-full border border-purple-100 before:absolute before:-inset-2 before:rounded-full before:border before:border-purple-50 bg-purple-50/50 items-center justify-center">
@@ -173,13 +219,21 @@ function LandingPage({ onGetStarted }: { onGetStarted: () => void }) {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>
 
       {/* How it Works Section */}
-      <div className="bg-[#0f172a] py-24 w-full relative overflow-hidden">
+      <div className="relative">
+        {/* Creative Top Edge */}
+        <div className="absolute top-0 left-0 w-full h-24 -translate-y-full overflow-hidden pointer-events-none">
+          <svg className="absolute bottom-0 w-full h-24 text-[#0f172a]" viewBox="0 0 1440 100" fill="currentColor" preserveAspectRatio="none">
+            <path d="M0,100 C480,0 960,0 1440,100 L1440,100 L0,100 Z" />
+          </svg>
+        </div>
+
+        <div className="bg-[#0f172a] py-24 w-full relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="mb-16 md:text-left text-center">
             <p className="text-slate-400 font-bold tracking-[0.2em] text-sm uppercase mb-4">How Finui Works</p>
@@ -282,9 +336,19 @@ function LandingPage({ onGetStarted }: { onGetStarted: () => void }) {
           </div>
         </div>
       </div>
+    </div>
+      </div>
 
       {/* Smart AI Section */}
-      <div className="bg-[#080c14] py-24 w-full relative overflow-hidden">
+      <div className="relative">
+        {/* Creative Top Edge - Slanted */}
+        <div className="absolute top-0 left-0 w-full h-32 -translate-y-full overflow-hidden pointer-events-none">
+          <svg className="absolute bottom-0 w-full h-32 text-[#080c14]" viewBox="0 0 1440 100" fill="currentColor" preserveAspectRatio="none">
+            <path d="M0,100 L1440,0 L1440,100 Z" />
+          </svg>
+        </div>
+
+        <div className="bg-[#080c14] py-24 w-full relative overflow-hidden">
         {/* Background elements */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-600/20 rounded-full mix-blend-screen filter blur-[100px]"></div>
@@ -384,12 +448,36 @@ function LandingPage({ onGetStarted }: { onGetStarted: () => void }) {
 
           </div>
         </div>
+
+        {/* CTA Section for About Page */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-32 bg-emerald-900 rounded-[3rem] p-12 md:p-20 text-center text-white relative overflow-hidden shadow-2xl"
+        >
+          <div className="absolute inset-0 z-0">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/20 rounded-full -mr-20 -mt-20 blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/20 rounded-full -ml-20 -mb-20 blur-3xl"></div>
+          </div>
+          
+          <div className="relative z-10 space-y-8">
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight">Ready to build your <br />financial future?</h2>
+            <p className="text-emerald-100/70 text-lg max-w-2xl mx-auto">Join thousands of entrepreneurs who are unlocking credit and growing their businesses with Finui.</p>
+            <button 
+              onClick={() => window.location.hash = '#auth'}
+              className="bg-white text-emerald-900 px-10 py-4 rounded-2xl font-black text-lg hover:bg-emerald-50 transition-all shadow-xl shadow-emerald-950/20"
+            >
+              Get Started Now
+            </button>
+          </div>
+        </motion.div>
       </div>
     </div>
   );
 }
 
-function AuthPage({ onLogin }: { onLogin: (user: User) => void }) {
+function AuthPage({ onLogin, onBack }: { onLogin: (user: User) => void, onBack: () => void }) {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -429,73 +517,242 @@ function AuthPage({ onLogin }: { onLogin: (user: User) => void }) {
   };
 
   return (
-    <div className="max-w-md mx-auto px-4 py-12">
-      <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-black text-gray-900">{isLogin ? 'Welcome Back' : 'Create Account'}</h2>
-          <p className="text-gray-500 mt-2">{isLogin ? 'Log in to access your dashboard' : 'Join Finui to build your trust score'}</p>
-        </div>
-        
-        {error && (
-          <div className="bg-red-50 text-red-600 p-4 rounded-xl mb-6 text-sm font-medium flex items-center gap-2">
-            <AlertCircle size={16} /> {error}
-          </div>
-        )}
-        
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {!isLogin && (
-            <>
-              <div>
-                <label className="block text-sm font-bold text-gray-700 mb-1">Full Name</label>
-                <input type="text" required value={name} onChange={e => setName(e.target.value)} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Amina N." />
-              </div>
-              <div>
-                <label className="block text-sm font-bold text-gray-700 mb-1">Phone Number</label>
-                <input type="tel" required value={phone} onChange={e => setPhone(e.target.value)} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="+256 700 000 000" />
-              </div>
-              <div>
-                <label className="block text-sm font-bold text-gray-700 mb-1">Business Type</label>
-                <input type="text" required value={businessType} onChange={e => setBusinessType(e.target.value)} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Market Vendor" />
-              </div>
-            </>
-          )}
-          <div>
-            <label className="block text-sm font-bold text-gray-700 mb-1">Email Address</label>
-            <input type="email" required value={email} onChange={e => setEmail(e.target.value)} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="demo@finui.com" />
-          </div>
-          <div>
-            <label className="block text-sm font-bold text-gray-700 mb-1">Password</label>
-            <input type="password" required value={password} onChange={e => setPassword(e.target.value)} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="••••••••" />
+    <div className="fixed inset-0 z-[60] bg-white flex flex-col lg:flex-row overflow-hidden">
+      {/* Back Button */}
+      <button 
+        onClick={onBack}
+        className="absolute top-6 left-6 z-50 flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-md border border-gray-200 rounded-full text-sm font-bold text-gray-600 hover:text-emerald-600 hover:border-emerald-200 transition-all shadow-sm"
+      >
+        <ArrowLeft size={18} /> Back to Home
+      </button>
+
+      {/* Left Column: Form */}
+      <div className="w-full lg:w-1/2 h-full overflow-y-auto flex items-center justify-center p-8 lg:p-16 bg-white">
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="max-w-md w-full"
+        >
+          <div className="mb-10">
+            <div className="flex items-center gap-2 mb-6">
+              <Logo className="w-8 h-8" />
+              <span className="text-2xl font-black tracking-tight text-gray-900">Finui</span>
+            </div>
+            <h2 className="text-4xl font-black text-gray-900 tracking-tight">
+              {isLogin ? 'Welcome Back' : 'Join the Future'}
+            </h2>
+            <p className="text-gray-500 mt-3 text-lg">
+              {isLogin ? 'Log in to access your financial dashboard' : 'Start building your trust score today'}
+            </p>
           </div>
           
-          <button type="submit" disabled={loading} className="w-full bg-emerald-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-emerald-700 transition-all disabled:opacity-50 mt-4">
-            {loading ? 'Processing...' : (isLogin ? 'Log In' : 'Sign Up')}
-          </button>
-        </form>
+          {error && (
+            <motion.div 
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-red-50 text-red-600 p-4 rounded-2xl mb-6 text-sm font-medium flex items-center gap-3 border border-red-100"
+            >
+              <AlertCircle size={20} /> {error}
+            </motion.div>
+          )}
+          
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <AnimatePresence mode="wait">
+              {!isLogin && (
+                <motion.div 
+                  key="signup-fields"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="space-y-5 overflow-hidden"
+                >
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-1.5">Full Name</label>
+                    <input type="text" required value={name} onChange={e => setName(e.target.value)} className="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all" placeholder="Amina N." />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-bold text-gray-700 mb-1.5">Phone Number</label>
+                      <input type="tel" required value={phone} onChange={e => setPhone(e.target.value)} className="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all" placeholder="+256..." />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-bold text-gray-700 mb-1.5">Business Type</label>
+                      <input type="text" required value={businessType} onChange={e => setBusinessType(e.target.value)} className="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all" placeholder="Market Vendor" />
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-1.5">Email Address</label>
+              <input type="email" required value={email} onChange={e => setEmail(e.target.value)} className="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all" placeholder="demo@finui.com" />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-1.5">Password</label>
+              <input type="password" required value={password} onChange={e => setPassword(e.target.value)} className="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all" placeholder="••••••••" />
+            </div>
+            
+            <button type="submit" disabled={loading} className="w-full bg-emerald-600 text-white py-4 rounded-2xl font-bold text-lg hover:bg-emerald-700 transition-all disabled:opacity-50 mt-4 shadow-lg shadow-emerald-100">
+              {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Create Account')}
+            </button>
+          </form>
+          
+          <div className="mt-8 text-center">
+            <button onClick={() => setIsLogin(!isLogin)} className="text-emerald-600 font-bold hover:underline text-base">
+              {isLogin ? "Don't have an account? Sign up" : "Already have an account? Log in"}
+            </button>
+          </div>
+          
+          {isLogin && (
+            <div className="mt-12 pt-8 border-t border-gray-100">
+              <p className="text-xs text-gray-400 font-black tracking-widest uppercase mb-4 text-center">Quick Access Demo</p>
+              <div className="grid grid-cols-1 gap-2">
+                <button onClick={() => { setEmail('amina@demo.com'); setPassword('demo123'); }} className="text-xs bg-gray-50 p-3 rounded-xl border border-gray-100 hover:bg-emerald-50 hover:border-emerald-200 transition-all text-left flex items-center justify-between group">
+                  <div>
+                    <span className="font-bold text-gray-900 block group-hover:text-emerald-700">Amina (Market Vendor)</span>
+                    <span className="text-gray-500">amina@demo.com</span>
+                  </div>
+                  <ArrowRight size={14} className="text-gray-300 group-hover:text-emerald-500" />
+                </button>
+              </div>
+            </div>
+          )}
+        </motion.div>
+      </div>
+
+      {/* Right Column: Creative Content */}
+      <div className="hidden lg:block lg:w-1/2 h-full relative bg-emerald-900 overflow-hidden">
+        <AnimatePresence mode="wait">
+          {isLogin ? (
+            <motion.div 
+              key="login-img"
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.6 }}
+              className="absolute inset-0 flex flex-col items-center justify-center p-20 text-center"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/20 to-teal-900/40 z-10"></div>
+              <img 
+                src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=1000" 
+                alt="Market Vendor" 
+                className="absolute inset-0 w-full h-full object-cover opacity-40"
+                referrerPolicy="no-referrer"
+              />
+              <div className="relative z-20 space-y-6">
+                <div className="w-24 h-24 bg-white/10 backdrop-blur-xl rounded-3xl flex items-center justify-center mx-auto border border-white/20 shadow-2xl">
+                  <ShieldCheck size={48} className="text-emerald-400" />
+                </div>
+                <h3 className="text-4xl font-black text-white leading-tight">Your trust is your <br />most valuable asset.</h3>
+                <p className="text-emerald-100/70 text-lg max-w-sm mx-auto">We help you turn your daily transactions into a verifiable financial identity.</p>
+              </div>
+
+              {/* Floating UI Mockup on Image */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ delay: 0.5, type: 'spring' }}
+                className="absolute bottom-12 left-12 right-12 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 shadow-2xl z-30"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="size-12 rounded-2xl bg-emerald-500 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+                    <ShieldCheck className="text-white" size={24} />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-white font-black text-lg">Trust Verified</p>
+                    <p className="text-emerald-200 text-xs font-bold uppercase tracking-wider">Secure Access</p>
+                  </div>
+                </div>
+                <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                  <motion.div 
+                    initial={{ width: 0 }}
+                    animate={{ width: '85%' }}
+                    transition={{ delay: 1, duration: 1.5 }}
+                    className="h-full bg-emerald-400"
+                  />
+                </div>
+              </motion.div>
+            </motion.div>
+          ) : (
+            <motion.div 
+              key="signup-img"
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.6 }}
+              className="absolute inset-0 flex flex-col items-center justify-center p-20 text-center"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-emerald-900/40 z-10"></div>
+              <img 
+                src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=1000" 
+                alt="Growth" 
+                className="absolute inset-0 w-full h-full object-cover opacity-40"
+                referrerPolicy="no-referrer"
+              />
+              <div className="relative z-20 space-y-6">
+                <div className="w-24 h-24 bg-white/10 backdrop-blur-xl rounded-3xl flex items-center justify-center mx-auto border border-white/20 shadow-2xl">
+                  <TrendingUp size={48} className="text-emerald-400" />
+                </div>
+                <h3 className="text-4xl font-black text-white leading-tight">Grow your business <br />without boundaries.</h3>
+                <p className="text-emerald-100/70 text-lg max-w-sm mx-auto">Unlock micro-loans and credit tiers as you build your savings and trust score.</p>
+              </div>
+
+              {/* Floating UI Mockup on Image */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ delay: 0.5, type: 'spring' }}
+                className="absolute bottom-12 left-12 right-12 bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 shadow-2xl z-30"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="size-12 rounded-2xl bg-blue-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
+                    <TrendingUp className="text-white" size={24} />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-white font-black text-lg">Future Growth</p>
+                    <p className="text-blue-200 text-xs font-bold uppercase tracking-wider">Start Your Journey</p>
+                  </div>
+                </div>
+                <div className="flex gap-2 items-end h-8">
+                  {[1, 2, 3, 4, 5, 6].map(i => (
+                    <motion.div 
+                      key={i}
+                      initial={{ height: 10 }}
+                      animate={{ height: [10, 30, 15, 25, 20, 35][i-1] }}
+                      transition={{ delay: 1 + (i * 0.1), duration: 1, repeat: Infinity, repeatType: 'reverse' }}
+                      className="w-full bg-blue-400/50 rounded-t-lg"
+                    />
+                  ))}
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
         
-        <div className="mt-6 text-center">
-          <button onClick={() => setIsLogin(!isLogin)} className="text-emerald-600 font-bold hover:underline">
-            {isLogin ? "Don't have an account? Sign up" : "Already have an account? Log in"}
-          </button>
-        </div>
-        
-        {isLogin && (
-          <div className="mt-8 pt-6 border-t border-gray-100">
-            <p className="text-sm text-gray-500 font-medium mb-3 text-center">Demo Accounts</p>
-            <div className="flex flex-col gap-2">
-              <button onClick={() => { setEmail('amina@demo.com'); setPassword('demo123'); }} className="text-xs bg-gray-50 p-2 rounded border border-gray-200 hover:bg-gray-100 text-left">
-                <span className="font-bold text-gray-900">Amina (Market Vendor)</span> - amina@demo.com
-              </button>
-              <button onClick={() => { setEmail('kato@demo.com'); setPassword('demo123'); }} className="text-xs bg-gray-50 p-2 rounded border border-gray-200 hover:bg-gray-100 text-left">
-                <span className="font-bold text-gray-900">Kato (Boda Boda)</span> - kato@demo.com
-              </button>
-              <button onClick={() => { setEmail('sarah@demo.com'); setPassword('demo123'); }} className="text-xs bg-gray-50 p-2 rounded border border-gray-200 hover:bg-gray-100 text-left">
-                <span className="font-bold text-gray-900">Sarah (Tailor)</span> - sarah@demo.com
-              </button>
+        {/* Floating UI Elements for extra creativity */}
+        <div className="absolute bottom-12 left-12 right-12 z-30 flex justify-between items-end">
+          <div className="bg-white/10 backdrop-blur-md border border-white/10 p-4 rounded-2xl flex items-center gap-3">
+            <div className="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center">
+              <CheckCircle2 size={16} className="text-white" />
+            </div>
+            <div className="text-left">
+              <p className="text-[10px] text-emerald-200 font-bold uppercase tracking-widest">Verified</p>
+              <p className="text-sm text-white font-bold">Trust Score: 850</p>
             </div>
           </div>
-        )}
+          <div className="bg-white/10 backdrop-blur-md border border-white/10 p-4 rounded-2xl flex items-center gap-3">
+            <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+              <PiggyBank size={16} className="text-white" />
+            </div>
+            <div className="text-left">
+              <p className="text-[10px] text-blue-200 font-bold uppercase tracking-widest">Savings</p>
+              <p className="text-sm text-white font-bold">UGX 1.2M</p>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
     </div>
   );
 }
@@ -585,60 +842,149 @@ function ProfileSettings({ user, onUpdate, onLogout }: { user: User, onUpdate: (
   );
 }
 
-function AboutPage() {
+function AboutPage({ setActiveTab }: { setActiveTab: (tab: any) => void }) {
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight">About Finui</h1>
-        <p className="text-xl text-gray-500 font-medium">Empowering informal workers through accessible financial tools.</p>
+    <div className="flex flex-col gap-24 pb-24 relative">
+      {/* Background Blobs */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/3 right-0 w-[600px] h-[600px] bg-emerald-500/5 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-1/3 left-0 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[120px]"></div>
       </div>
 
-      <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-gray-100">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">Our Mission</h2>
-        <p className="text-gray-600 text-lg leading-relaxed mb-8">
-          Millions of informal workers lack access to traditional banking and credit facilities because they don't have formal pay slips or predictable monthly salaries. Finui bridges this gap by using alternative data—like mobile money transaction patterns—to build a verifiable "Trust Score."
-        </p>
-
-        <h2 className="text-2xl font-bold text-gray-900 mb-6 border-t border-gray-100 pt-8">How to Use Finui</h2>
+      {/* Hero Section */}
+      <div className="relative bg-slate-900 pt-32 pb-48 overflow-hidden z-10">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px]"></div>
+          <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px]"></div>
+        </div>
         
-        <div className="space-y-8">
-          <div className="flex gap-4">
-            <div className="shrink-0 w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold text-xl">1</div>
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Track Your Transactions</h3>
-              <p className="text-gray-600 leading-relaxed">Connect your mobile money account. Finui automatically categorizes your daily income and expenses to understand your cash flow.</p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-emerald-400 font-black tracking-[0.3em] uppercase text-sm mb-6"
+          >
+            Our Mission
+          </motion.p>
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-5xl md:text-7xl font-black text-white tracking-tight leading-tight mb-8"
+          >
+            Financial inclusion for the <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">unbanked hustle.</span>
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed"
+          >
+            Finui bridges the gap between informal work and formal finance using alternative data and AI-driven trust metrics.
+          </motion.p>
+        </div>
+
+        {/* Creative Bottom Edge */}
+        <div className="absolute bottom-0 left-0 w-full h-32 overflow-hidden pointer-events-none">
+          <svg className="absolute bottom-0 w-full h-32 text-white" viewBox="0 0 1440 100" fill="currentColor" preserveAspectRatio="none">
+            <path d="M0,100 C480,0 960,0 1440,100 L1440,100 L0,100 Z" />
+          </svg>
+        </div>
+      </div>
+
+      {/* Content Sections */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 relative z-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Why Finui */}
+          <motion.div 
+            whileHover={{ y: -10 }}
+            className="bg-white p-10 rounded-[3rem] shadow-xl shadow-slate-200/50 border border-slate-100 flex flex-col gap-6"
+          >
+            <div className="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600">
+              <ShieldCheck size={32} />
             </div>
-          </div>
-          
-          <div className="flex gap-4">
-            <div className="shrink-0 w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold text-xl">2</div>
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Monitor Your Trust Score</h3>
-              <p className="text-gray-600 leading-relaxed">Check the Dashboard to see your Trust Score. It improves based on three factors: Income Regularity, Consistency, and Savings Stability.</p>
+            <h2 className="text-3xl font-black text-slate-900">Why Finui?</h2>
+            <p className="text-slate-600 text-lg leading-relaxed">
+              Millions of informal workers lack access to traditional banking because they don't have formal pay slips. We use alternative data—like mobile money transaction patterns—to build a verifiable "Trust Score."
+            </p>
+          </motion.div>
+
+          {/* Our Vision */}
+          <motion.div 
+            whileHover={{ y: -10 }}
+            className="bg-emerald-600 p-10 rounded-[3rem] shadow-xl shadow-emerald-200/50 text-white flex flex-col gap-6"
+          >
+            <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-white">
+              <TrendingUp size={32} />
             </div>
+            <h2 className="text-3xl font-black">Our Vision</h2>
+            <p className="text-emerald-50 text-lg leading-relaxed">
+              We envision a world where every hard-working individual, regardless of their employment status, has the tools to grow their wealth, access credit, and secure their financial future.
+            </p>
+          </motion.div>
+        </div>
+
+        {/* How it Works Grid */}
+        <div className="mt-24 space-y-12">
+          <div className="text-center">
+            <h2 className="text-4xl font-black text-slate-900">How to use Finui</h2>
+            <p className="text-slate-500 mt-4">Four simple steps to financial freedom.</p>
           </div>
 
-          <div className="flex gap-4">
-            <div className="shrink-0 w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold text-xl">3</div>
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Follow Smart Savings Nudges</h3>
-              <p className="text-gray-600 leading-relaxed">Visit the Savings tab. Our AI detects when you've had a good income day and suggests a small, manageable amount to save.</p>
-            </div>
-          </div>
-
-          <div className="flex gap-4">
-            <div className="shrink-0 w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold text-xl">4</div>
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Unlock Credit Tiers</h3>
-              <p className="text-gray-600 leading-relaxed">As your Trust Score grows and your savings balance increases, you will automatically unlock higher credit tiers, giving you access to micro-loans when you need them.</p>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {[
+              { step: "01", title: "Track", desc: "Connect your mobile money and track daily income.", icon: Wallet },
+              { step: "02", title: "Monitor", desc: "Watch your Trust Score grow with every transaction.", icon: ShieldCheck },
+              { step: "03", title: "Save", desc: "Follow AI nudges to save small amounts effortlessly.", icon: PiggyBank },
+              { step: "04", title: "Unlock", desc: "Access micro-loans and higher credit tiers.", icon: TrendingUp },
+            ].map((item, idx) => (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-100 hover:bg-white hover:shadow-lg transition-all group"
+              >
+                <div className="text-4xl font-black text-slate-200 mb-6 group-hover:text-emerald-200 transition-colors">{item.step}</div>
+                <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-emerald-600 mb-4">
+                  <item.icon size={24} />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-2">{item.title}</h3>
+                <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
+
+        {/* CTA Section for About Page */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-32 bg-emerald-900 rounded-[3rem] p-12 md:p-20 text-center text-white relative overflow-hidden shadow-2xl"
+        >
+          <div className="absolute inset-0 z-0">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/20 rounded-full -mr-20 -mt-20 blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/20 rounded-full -ml-20 -mb-20 blur-3xl"></div>
+          </div>
+          
+          <div className="relative z-10 space-y-8">
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight">Ready to build your <br />financial future?</h2>
+            <p className="text-emerald-100/70 text-lg max-w-2xl mx-auto">Join thousands of entrepreneurs who are unlocking credit and growing their businesses with Finui.</p>
+            <button 
+              onClick={() => setActiveTab('auth')}
+              className="bg-white text-emerald-900 px-10 py-4 rounded-2xl font-black text-lg hover:bg-emerald-50 transition-all shadow-xl shadow-emerald-950/20"
+            >
+              Get Started Now
+            </button>
+          </div>
+        </motion.div>
       </div>
     </div>
   );
 }
-
 function Dashboard({ user, score, transactions }: { user: User | null, score: TrustScore | null, transactions: Transaction[] }) {
   if (!user || !score) return <div className="p-12 flex justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div></div>;
 
@@ -649,6 +995,7 @@ function Dashboard({ user, score, transactions }: { user: User | null, score: Tr
   const COLORS = ['#10b981', '#e5e7eb'];
 
   const handleDownloadReport = () => {
+    // ... (existing report logic)
     const reportContent = `
 =========================================
 FINUI FINANCIAL TRUST REPORT
@@ -698,27 +1045,60 @@ history generated by Finui.
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-      {/* Header */}
-      <div className="bg-emerald-600 text-white p-8 rounded-3xl shadow-lg flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-        <div>
-          <p className="text-emerald-100 text-lg mb-1">Welcome back,</p>
-          <h1 className="text-4xl font-bold">{user.name}</h1>
-        </div>
-        <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
-          <button 
-            onClick={handleDownloadReport}
-            className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2 rounded-xl flex items-center gap-2 transition-colors font-medium text-sm backdrop-blur-sm"
-          >
-            <Download size={18} />
-            Download Report
-          </button>
-          <div className="bg-white/20 rounded-2xl p-6 backdrop-blur-sm min-w-[280px] border border-white/10">
-            <p className="text-emerald-100 text-sm mb-2 font-medium">Total Available Balance</p>
-            <h2 className="text-4xl font-bold">UGX {user.balance.toLocaleString()}</h2>
+    <div className="relative min-h-screen">
+      {/* Background Blobs */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[100px]"></div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[100px]"></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 relative z-10">
+        {/* Header */}
+        <div className="relative bg-emerald-600 text-white rounded-[3rem] shadow-xl overflow-hidden">
+          <div className="p-8 md:p-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative z-10">
+            <div>
+              <motion.p 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="text-emerald-100 text-lg mb-1 font-medium"
+              >
+                Welcome back,
+              </motion.p>
+              <motion.h1 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 }}
+                className="text-4xl md:text-5xl font-black tracking-tight"
+              >
+                {user.name}
+              </motion.h1>
+            </div>
+            <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
+              <button 
+                onClick={handleDownloadReport}
+                className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-6 py-3 rounded-2xl flex items-center gap-2 transition-all font-bold text-sm backdrop-blur-md"
+              >
+                <Download size={20} />
+                Download Report
+              </button>
+              <div className="bg-white/20 rounded-[2rem] p-8 backdrop-blur-xl min-w-[300px] border border-white/10 shadow-2xl">
+                <p className="text-emerald-100 text-xs mb-2 font-black uppercase tracking-widest">Available Balance</p>
+                <h2 className="text-4xl font-black">UGX {user.balance.toLocaleString()}</h2>
+              </div>
+            </div>
+          </div>
+
+          {/* Decorative elements */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-20 -mt-20 blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-400/20 rounded-full -ml-20 -mb-20 blur-3xl"></div>
+          
+          {/* Creative Bottom Edge */}
+          <div className="absolute bottom-0 left-0 w-full h-12 overflow-hidden pointer-events-none">
+            <svg className="absolute bottom-0 w-full h-12 text-white/5" viewBox="0 0 1440 100" fill="currentColor" preserveAspectRatio="none">
+              <path d="M0,100 C480,0 960,0 1440,100 L1440,100 L0,100 Z" />
+            </svg>
           </div>
         </div>
-      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Trust Score Card (Spans 2 columns on desktop) */}
@@ -792,7 +1172,7 @@ history generated by Finui.
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
           
           <div className="mt-8 p-4 bg-blue-50/80 border border-blue-100 rounded-2xl flex items-start gap-4">
             <div className="bg-blue-100 p-2 rounded-full shrink-0">
@@ -838,10 +1218,12 @@ history generated by Finui.
         </div>
       </div>
     </div>
+  </div>
   );
 }
 
 function SavingsFlow({ user, onTransferSuccess }: { user: User | null, onTransferSuccess: () => void }) {
+  // ... (existing state)
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
   const [recommendation, setRecommendation] = useState<{suggestedAmount: number, message: string} | null>(null);
@@ -888,11 +1270,18 @@ function SavingsFlow({ user, onTransferSuccess }: { user: User | null, onTransfe
   if (!user) return null;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-      <div>
-        <h2 className="text-3xl font-bold text-gray-900">Savings & Investments</h2>
-        <p className="text-gray-500 mt-2">Grow your wealth and unlock better credit tiers.</p>
+    <div className="relative min-h-screen">
+      {/* Background Blobs */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-0 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px]"></div>
+        <div className="absolute bottom-1/4 right-0 w-[400px] h-[400px] bg-emerald-500/5 rounded-full blur-[100px]"></div>
       </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 relative z-10">
+        <div>
+          <h2 className="text-4xl font-black text-gray-900 tracking-tight">Savings & Investments</h2>
+          <p className="text-gray-500 mt-2 text-lg">Grow your wealth and unlock better credit tiers.</p>
+        </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="space-y-8">
@@ -939,6 +1328,7 @@ function SavingsFlow({ user, onTransferSuccess }: { user: User | null, onTransfe
               </div>
             </div>
           )}
+          </div>
         </div>
 
         {/* Quick Transfer Form */}
@@ -1146,8 +1536,8 @@ export default function App() {
       {/* Main Content Area */}
       <main className="flex-1 pb-20 md:pb-8">
         {activeTab === 'landing' && <LandingPage onGetStarted={() => setActiveTab(user ? 'home' : 'auth')} />}
-        {activeTab === 'about' && <AboutPage />}
-        {activeTab === 'auth' && !user && <AuthPage onLogin={handleLogin} />}
+        {activeTab === 'about' && <AboutPage setActiveTab={setActiveTab} />}
+        {activeTab === 'auth' && !user && <AuthPage onLogin={handleLogin} onBack={() => setActiveTab('landing')} />}
         
         {user && (
           <>
