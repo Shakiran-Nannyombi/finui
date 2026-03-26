@@ -2,15 +2,15 @@ import { PiggyBank, TrendingUp, ShieldCheck } from 'lucide-react';
 
 export function SmartAISection() {
     return (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24">
-            <div className="bg-[#080c14] rounded-[3rem] py-24 w-full relative overflow-hidden shadow-2xl shadow-slate-900/40">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto bg-[#080c14] rounded-[3rem] py-24 w-full relative overflow-hidden shadow-2xl shadow-slate-900/40">
                 {/* Background elements */}
                 <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
                     <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-600/20 rounded-full mix-blend-screen filter blur-[100px]"></div>
                     <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/20 rounded-full mix-blend-screen filter blur-[100px]"></div>
                 </div>
 
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div className="px-8 md:px-16 relative z-10">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
                         {/* Left: Floating Chat UI */}

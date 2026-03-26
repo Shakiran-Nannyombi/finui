@@ -6,9 +6,9 @@ interface HowItWorksProps {
 
 export function HowItWorks({ onGetStarted }: HowItWorksProps) {
     return (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-[#0f172a] rounded-[3rem] py-24 w-full relative overflow-hidden shadow-2xl shadow-slate-900/20">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto bg-[#0f172a] rounded-[3rem] py-24 w-full relative overflow-hidden shadow-2xl shadow-slate-900/20">
+                <div className="px-8 md:px-16 relative z-10">
                     <div className="mb-16 md:text-left text-center">
                         <p className="text-slate-400 font-bold tracking-[0.2em] text-sm uppercase mb-4">How Finui Works</p>
                         <h2 className="text-4xl md:text-5xl font-black text-white max-w-2xl leading-tight">
