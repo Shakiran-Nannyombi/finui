@@ -1,4 +1,4 @@
-import { Home, PiggyBank, User as UserIcon, LayoutDashboard, Info } from 'lucide-react'
+import { Home, PiggyBank, User as UserIcon, LayoutDashboard, Info, LogOut } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import type { TabName, User } from '../../types'
 
@@ -6,11 +6,12 @@ interface MobileNavProps {
     activeTab: TabName
     user: User | null
     onTabChange: (tab: TabName) => void
+    onLogout?: () => void
 }
 
-export function MobileNav({ activeTab, user, onTabChange }: MobileNavProps) {
+export function MobileNav({ activeTab, user, onTabChange, onLogout }: MobileNavProps) {
     return (
-        <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-3 flex justify-between items-center z-50 pb-safe">
+        <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2 flex justify-between items-center z-50 pb-safe">
             <button
                 onClick={() => onTabChange('landing')}
                 className={cn(
@@ -18,7 +19,7 @@ export function MobileNav({ activeTab, user, onTabChange }: MobileNavProps) {
                     activeTab === 'landing' ? "text-emerald-600" : "text-gray-400 hover:text-gray-600"
                 )}
             >
-                <Home size={24} className={activeTab === 'landing' ? "fill-emerald-100" : ""} />
+                <Home size={22} className={activeTab === 'landing' ? "fill-emerald-100" : ""} />
                 <span className="text-[10px] font-bold">Home</span>
             </button>
 
@@ -29,7 +30,7 @@ export function MobileNav({ activeTab, user, onTabChange }: MobileNavProps) {
                     activeTab === 'about' ? "text-emerald-600" : "text-gray-400 hover:text-gray-600"
                 )}
             >
-                <Info size={24} className={activeTab === 'about' ? "fill-emerald-100" : ""} />
+                <Info size={22} className={activeTab === 'about' ? "fill-emerald-100" : ""} />
                 <span className="text-[10px] font-bold">About</span>
             </button>
 
@@ -42,7 +43,7 @@ export function MobileNav({ activeTab, user, onTabChange }: MobileNavProps) {
                             activeTab === 'home' ? "text-emerald-600" : "text-gray-400 hover:text-gray-600"
                         )}
                     >
-                        <LayoutDashboard size={24} className={activeTab === 'home' ? "fill-emerald-100" : ""} />
+                        <LayoutDashboard size={22} className={activeTab === 'home' ? "fill-emerald-100" : ""} />
                         <span className="text-[10px] font-bold">Dashboard</span>
                     </button>
 
@@ -53,7 +54,7 @@ export function MobileNav({ activeTab, user, onTabChange }: MobileNavProps) {
                             activeTab === 'savings' ? "text-emerald-600" : "text-gray-400 hover:text-gray-600"
                         )}
                     >
-                        <PiggyBank size={24} className={activeTab === 'savings' ? "fill-emerald-100" : ""} />
+                        <PiggyBank size={22} className={activeTab === 'savings' ? "fill-emerald-100" : ""} />
                         <span className="text-[10px] font-bold">Savings</span>
                     </button>
 
@@ -64,9 +65,19 @@ export function MobileNav({ activeTab, user, onTabChange }: MobileNavProps) {
                             activeTab === 'profile' ? "text-emerald-600" : "text-gray-400 hover:text-gray-600"
                         )}
                     >
-                        <UserIcon size={24} className={activeTab === 'profile' ? "fill-emerald-100" : ""} />
+                        <UserIcon size={22} className={activeTab === 'profile' ? "fill-emerald-100" : ""} />
                         <span className="text-[10px] font-bold">Profile</span>
                     </button>
+
+                    {onLogout && (
+                        <button
+                            onClick={onLogout}
+                            className="flex flex-col items-center gap-1 p-2 transition-colors text-red-400 hover:text-red-600"
+                        >
+                            <LogOut size={22} />
+                            <span className="text-[10px] font-bold">Logout</span>
+                        </button>
+                    )}
                 </>
             ) : (
                 <button
@@ -76,7 +87,7 @@ export function MobileNav({ activeTab, user, onTabChange }: MobileNavProps) {
                         activeTab === 'auth' ? "text-emerald-600" : "text-gray-400 hover:text-gray-600"
                     )}
                 >
-                    <UserIcon size={24} className={activeTab === 'auth' ? "fill-emerald-100" : ""} />
+                    <UserIcon size={22} className={activeTab === 'auth' ? "fill-emerald-100" : ""} />
                     <span className="text-[10px] font-bold">Login</span>
                 </button>
             )}

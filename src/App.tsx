@@ -25,7 +25,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gray-50/50 font-sans text-gray-900 flex flex-col">
-      <Navbar activeTab={activeTab} user={user} onTabChange={setActiveTab} />
+      <Navbar activeTab={activeTab} user={user} onTabChange={setActiveTab} onLogout={handleLogout} />
       <main className="flex-1 pb-20 md:pb-8">
         {activeTab === 'landing' && <LandingPage onGetStarted={() => setActiveTab(user ? 'home' : 'auth')} />}
         {activeTab === 'about' && <AboutPage setActiveTab={setActiveTab} />}
@@ -39,7 +39,7 @@ export default function App() {
         )}
       </main>
       <Footer />
-      <MobileNav activeTab={activeTab} user={user} onTabChange={setActiveTab} />
+      <MobileNav activeTab={activeTab} user={user} onTabChange={setActiveTab} onLogout={handleLogout} />
     </div>
   )
 }

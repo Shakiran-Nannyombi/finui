@@ -28,27 +28,27 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
                             initial={{ opacity: 0, x: -30 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: 0.5, duration: 0.7 }}
-                            className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-5 w-64 shadow-xl"
+                            className="bg-white rounded-2xl p-5 w-64 shadow-2xl"
                             style={{ animation: 'heroFloat 3.5s ease-in-out 0.3s infinite' }}
                         >
                             <div className="flex items-center gap-3 mb-3">
-                                <div className="w-9 h-9 bg-blue-400/20 rounded-xl flex items-center justify-center">
-                                    <PiggyBank size={18} className="text-blue-200" />
+                                <div className="w-9 h-9 bg-blue-100 rounded-xl flex items-center justify-center">
+                                    <PiggyBank size={18} className="text-blue-600" />
                                 </div>
                                 <div>
-                                    <p className="text-[10px] text-emerald-200/70 font-bold uppercase tracking-wider">Auto-saved today</p>
-                                    <p className="text-base font-black text-white">+ UGX 12,000</p>
+                                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Auto-saved today</p>
+                                    <p className="text-base font-black text-gray-900">+ UGX 12,000</p>
                                 </div>
                             </div>
-                            <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                            <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                                 <motion.div
-                                    className="h-full bg-blue-300 rounded-full"
+                                    className="h-full bg-blue-500 rounded-full"
                                     initial={{ width: 0 }}
                                     animate={{ width: '68%' }}
                                     transition={{ delay: 1.2, duration: 1 }}
                                 />
                             </div>
-                            <p className="text-[10px] text-emerald-200/50 mt-1.5">68% of monthly goal</p>
+                            <p className="text-[10px] text-gray-400 mt-1.5">68% of monthly goal</p>
                         </motion.div>
 
                         {/* Credit tier card */}
@@ -56,21 +56,21 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
                             initial={{ opacity: 0, x: -30 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: 0.7, duration: 0.7 }}
-                            className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-5 w-56 shadow-xl"
+                            className="bg-[#1e1040] border border-purple-800/40 rounded-2xl p-5 w-56 shadow-2xl"
                             style={{ animation: 'heroFloat 4.5s ease-in-out 1s infinite' }}
                         >
                             <div className="flex items-center gap-3">
-                                <div className="w-9 h-9 bg-purple-400/20 rounded-xl flex items-center justify-center">
-                                    <Lock size={16} className="text-purple-200" />
+                                <div className="w-9 h-9 bg-purple-500/20 rounded-xl flex items-center justify-center">
+                                    <Lock size={16} className="text-purple-300" />
                                 </div>
                                 <div>
-                                    <p className="text-[10px] text-emerald-200/70 font-bold uppercase tracking-wider">Credit Unlocked</p>
+                                    <p className="text-[10px] text-purple-300/70 font-bold uppercase tracking-wider">Credit Unlocked</p>
                                     <p className="text-sm font-black text-white">Tier 2 — UGX 200K</p>
                                 </div>
                             </div>
                             <div className="mt-3 flex gap-1.5">
                                 {[1, 2, 3].map(t => (
-                                    <div key={t} className={`flex-1 h-2 rounded-full ${t <= 2 ? 'bg-emerald-400' : 'bg-white/20'}`} />
+                                    <div key={t} className={`flex-1 h-2 rounded-full ${t <= 2 ? 'bg-purple-400' : 'bg-white/10'}`} />
                                 ))}
                             </div>
                         </motion.div>
@@ -162,25 +162,25 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
                             initial={{ opacity: 0, x: 30 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: 0.5, duration: 0.7 }}
-                            className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-5 w-64 shadow-xl"
+                            className="bg-slate-900 border border-slate-700/60 rounded-2xl p-5 w-64 shadow-2xl"
                             style={{ animation: 'heroFloat 4s ease-in-out infinite' }}
                         >
                             <div className="flex items-center justify-between mb-4">
                                 <div>
-                                    <p className="text-[10px] text-emerald-200/70 font-bold uppercase tracking-widest">Trust Score</p>
-                                    <p className="text-emerald-200/50 text-[10px]">Updated just now</p>
+                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Trust Score</p>
+                                    <p className="text-slate-500 text-[10px]">Updated just now</p>
                                 </div>
-                                <div className="w-8 h-8 bg-emerald-400/20 rounded-xl flex items-center justify-center">
-                                    <ShieldCheck size={16} className="text-emerald-300" />
+                                <div className="w-8 h-8 bg-emerald-500/20 rounded-xl flex items-center justify-center">
+                                    <ShieldCheck size={16} className="text-emerald-400" />
                                 </div>
                             </div>
                             <div className="flex items-center gap-4">
                                 <div className="relative w-16 h-16 shrink-0">
                                     <svg viewBox="0 0 80 80" className="w-full h-full -rotate-90">
-                                        <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="8" />
+                                        <circle cx="40" cy="40" r="32" fill="none" stroke="#1e293b" strokeWidth="8" />
                                         <motion.circle
                                             cx="40" cy="40" r="32" fill="none"
-                                            stroke="#6ee7b7" strokeWidth="8"
+                                            stroke="#10b981" strokeWidth="8"
                                             strokeLinecap="round"
                                             strokeDasharray="201"
                                             initial={{ strokeDashoffset: 201 }}
@@ -190,17 +190,17 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
                                     </svg>
                                     <div className="absolute inset-0 flex items-center justify-center flex-col">
                                         <span className="text-xl font-black text-white">82</span>
-                                        <span className="text-[8px] text-emerald-200/60">/100</span>
+                                        <span className="text-[8px] text-slate-400">/100</span>
                                     </div>
                                 </div>
                                 <div className="flex-1 space-y-2">
                                     {[{ l: 'Regularity', v: 88 }, { l: 'Consistency', v: 79 }, { l: 'Stability', v: 81 }].map((b, i) => (
                                         <div key={b.l}>
                                             <div className="flex justify-between text-[9px] mb-0.5">
-                                                <span className="text-emerald-200/60">{b.l}</span>
+                                                <span className="text-slate-400">{b.l}</span>
                                                 <span className="text-white font-bold">{b.v}%</span>
                                             </div>
-                                            <div className="h-1 bg-white/10 rounded-full overflow-hidden">
+                                            <div className="h-1 bg-slate-700 rounded-full overflow-hidden">
                                                 <motion.div
                                                     className="h-full bg-emerald-400 rounded-full"
                                                     initial={{ width: 0 }}
@@ -219,21 +219,21 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
                             initial={{ opacity: 0, x: 30 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: 0.75, duration: 0.7 }}
-                            className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-5 w-56 shadow-xl"
+                            className="bg-amber-50 border border-amber-200 rounded-2xl p-5 w-56 shadow-2xl"
                             style={{ animation: 'heroFloat 3.8s ease-in-out 0.8s infinite' }}
                         >
                             <div className="flex items-center gap-3 mb-2">
-                                <div className="w-9 h-9 bg-yellow-400/20 rounded-xl flex items-center justify-center">
-                                    <Zap size={16} className="text-yellow-300" />
+                                <div className="w-9 h-9 bg-amber-400/20 rounded-xl flex items-center justify-center">
+                                    <Zap size={16} className="text-amber-500" />
                                 </div>
-                                <p className="text-[10px] text-emerald-200/70 font-bold uppercase tracking-wider">AI Nudge</p>
+                                <p className="text-[10px] text-amber-600 font-bold uppercase tracking-wider">AI Nudge</p>
                             </div>
-                            <p className="text-white text-xs leading-relaxed">Good day! Save <span className="text-emerald-300 font-bold">UGX 8,000</span> now to boost your score by +5 pts 🎯</p>
+                            <p className="text-gray-800 text-xs leading-relaxed">Good day! Save <span className="text-amber-600 font-bold">UGX 8,000</span> now to boost your score by +5 pts 🎯</p>
                             <div className="mt-3 flex items-center gap-2">
-                                <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
-                                    <motion.div className="h-full bg-yellow-400 rounded-full" initial={{ width: 0 }} animate={{ width: '72%' }} transition={{ delay: 1.4, duration: 1 }} />
+                                <div className="flex-1 h-1.5 bg-amber-100 rounded-full overflow-hidden">
+                                    <motion.div className="h-full bg-amber-400 rounded-full" initial={{ width: 0 }} animate={{ width: '72%' }} transition={{ delay: 1.4, duration: 1 }} />
                                 </div>
-                                <span className="text-[9px] text-emerald-200/50 font-bold">+5 pts</span>
+                                <span className="text-[9px] text-amber-500 font-bold">+5 pts</span>
                             </div>
                         </motion.div>
 
@@ -242,15 +242,15 @@ export function HeroSection({ onGetStarted }: HeroSectionProps) {
                             initial={{ opacity: 0, x: 30 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: 0.95, duration: 0.6 }}
-                            className="bg-emerald-500/20 border border-emerald-400/30 rounded-2xl px-4 py-3 flex items-center gap-3 shadow-lg"
+                            className="bg-white rounded-2xl px-4 py-3 flex items-center gap-3 shadow-2xl"
                             style={{ animation: 'heroFloat 5s ease-in-out 1.5s infinite' }}
                         >
-                            <div className="w-8 h-8 bg-emerald-400/30 rounded-xl flex items-center justify-center">
-                                <TrendingUp size={16} className="text-emerald-300" />
+                            <div className="w-8 h-8 bg-emerald-100 rounded-xl flex items-center justify-center">
+                                <TrendingUp size={16} className="text-emerald-600" />
                             </div>
                             <div>
-                                <p className="text-[10px] text-emerald-200/60 font-bold uppercase tracking-wider">Score jumped</p>
-                                <p className="text-sm font-black text-emerald-300">↑ +7 points</p>
+                                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Score jumped</p>
+                                <p className="text-sm font-black text-emerald-600">↑ +7 points</p>
                             </div>
                         </motion.div>
                     </div>

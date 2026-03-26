@@ -12,7 +12,7 @@ export function AboutPage({ setActiveTab }: { setActiveTab: (tab: TabName) => vo
             </div>
 
             {/* Hero Section */}
-            <div className="relative bg-slate-900 pt-32 pb-24 overflow-hidden z-10">
+            <div className="relative bg-slate-900 pt-48 pb-32 overflow-hidden z-10">
                 <div className="absolute inset-0 z-0">
                     <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px]"></div>
                     <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px]"></div>
@@ -45,12 +45,7 @@ export function AboutPage({ setActiveTab }: { setActiveTab: (tab: TabName) => vo
                     </motion.p>
                 </div>
 
-                {/* Creative Bottom Edge */}
-                <div className="absolute bottom-0 left-0 w-full h-32 overflow-hidden pointer-events-none">
-                    <svg className="absolute bottom-0 w-full h-32 text-white" viewBox="0 0 1440 100" fill="currentColor" preserveAspectRatio="none">
-                        <path d="M0,100 C480,0 960,0 1440,100 L1440,100 L0,100 Z" />
-                    </svg>
-                </div>
+                {/* No bottom edge — clean straight cut */}
             </div>
 
             {/* Content Sections */}
