@@ -1,9 +1,11 @@
+import { motion } from 'motion/react';
 import { PiggyBank, TrendingUp, ShieldCheck } from 'lucide-react';
 
 export function SmartAISection() {
     return (
         <div className="w-full px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto bg-[#080c14] rounded-[3rem] py-24 w-full relative overflow-hidden shadow-2xl shadow-slate-900/40">
+
                 {/* Background elements */}
                 <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
                     <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-600/20 rounded-full mix-blend-screen filter blur-[100px]"></div>
@@ -14,7 +16,13 @@ export function SmartAISection() {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
                         {/* Left: Floating Chat UI */}
-                        <div className="relative h-[500px] w-full flex items-center justify-center order-2 lg:order-1">
+                        <motion.div
+                            initial={{ opacity: 0, x: -40 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.7, ease: 'easeOut' }}
+                            className="relative h-[500px] w-full flex items-center justify-center order-2 lg:order-1"
+                        >
                             {/* Main Chat Card */}
                             <div className="absolute z-20 w-80 bg-slate-800/80 backdrop-blur-xl rounded-3xl border border-slate-700 shadow-2xl p-6 transform -rotate-2 hover:rotate-0 transition-transform duration-500">
                                 <div className="flex items-center gap-4 mb-6 border-b border-slate-700 pb-4">
@@ -26,7 +34,6 @@ export function SmartAISection() {
                                         <p className="text-emerald-400 text-xs">Online</p>
                                     </div>
                                 </div>
-
                                 <div className="space-y-4">
                                     <div className="bg-slate-700/50 rounded-2xl rounded-tl-sm p-4 text-sm text-slate-200">
                                         Great day today! You earned UGX 45,000 more than your Tuesday average. 📈
@@ -67,10 +74,16 @@ export function SmartAISection() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
 
                         {/* Right: Text Content */}
-                        <div className="space-y-8 order-1 lg:order-2">
+                        <motion.div
+                            initial={{ opacity: 0, x: 40 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.7, ease: 'easeOut', delay: 0.15 }}
+                            className="space-y-8 order-1 lg:order-2"
+                        >
                             <p className="text-emerald-400 font-bold tracking-[0.2em] text-sm uppercase">Smart Savings</p>
                             <h2 className="text-4xl md:text-5xl font-black text-white leading-tight">
                                 An AI that understands your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">hustle.</span>
@@ -78,7 +91,6 @@ export function SmartAISection() {
                             <p className="text-slate-400 text-lg leading-relaxed">
                                 Informal income is unpredictable. Our AI analyzes your daily cash flow and suggests comfortable micro-savings only on your good days.
                             </p>
-
                             <ul className="space-y-6 mt-8">
                                 <li className="flex items-start gap-4">
                                     <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0 mt-1">
@@ -99,7 +111,7 @@ export function SmartAISection() {
                                     </div>
                                 </li>
                             </ul>
-                        </div>
+                        </motion.div>
 
                     </div>
                 </div>

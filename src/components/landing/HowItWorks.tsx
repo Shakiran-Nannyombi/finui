@@ -1,4 +1,4 @@
-import React from 'react';
+import { motion } from 'motion/react';
 
 interface HowItWorksProps {
     onGetStarted: () => void;
@@ -7,16 +7,23 @@ interface HowItWorksProps {
 export function HowItWorks({ onGetStarted }: HowItWorksProps) {
     return (
         <div className="w-full px-4 sm:px-6 lg:px-8">
-            <div className="max-w-7xl mx-auto bg-[#0f172a] rounded-[3rem] py-24 w-full relative overflow-hidden shadow-2xl shadow-slate-900/20">
+            <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, ease: 'easeOut' }}
+                className="max-w-7xl mx-auto bg-[#1e1040] rounded-[3rem] py-24 w-full relative overflow-hidden shadow-2xl shadow-purple-900/30"
+            >
                 <div className="px-8 md:px-16 relative z-10">
                     <div className="mb-16 md:text-left text-center">
-                        <p className="text-slate-400 font-bold tracking-[0.2em] text-sm uppercase mb-4">How Finui Works</p>
+                        <p className="text-purple-400 font-bold tracking-[0.2em] text-sm uppercase mb-4">How Finui Works</p>
                         <h2 className="text-4xl md:text-5xl font-black text-white max-w-2xl leading-tight">
                             Turn your daily hustle into <span className="text-emerald-400 font-serif italic font-normal">verifiable</span> financial power
                         </h2>
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
                         {/* Left: Phone Mockups */}
                         <div className="relative h-[500px] md:h-[600px] w-full flex items-center justify-center">
                             {/* Back phone */}
@@ -30,11 +37,9 @@ export function HowItWorks({ onGetStarted }: HowItWorksProps) {
 
                             {/* Front phone */}
                             <div className="absolute right-0 md:right-10 z-10 w-72 h-[500px] md:h-[550px] bg-white rounded-[2.5rem] border-[8px] border-slate-800 shadow-2xl transform rotate-3 overflow-hidden flex flex-col">
-                                {/* Notch */}
                                 <div className="absolute top-0 inset-x-0 h-6 flex justify-center">
                                     <div className="w-32 h-6 bg-slate-800 rounded-b-3xl"></div>
                                 </div>
-                                {/* Screen Content */}
                                 <div className="flex-1 p-6 pt-12 bg-gray-50 flex flex-col gap-4">
                                     <div className="text-center space-y-2 mt-4">
                                         <h4 className="font-bold text-gray-900 text-lg">Trust Score</h4>
@@ -64,26 +69,23 @@ export function HowItWorks({ onGetStarted }: HowItWorksProps) {
                                 </div>
                             </div>
 
-                            {/* Decorative glowing blobs */}
+                            {/* Glowing blobs */}
                             <div className="absolute bottom-10 left-10 w-48 h-48 bg-emerald-500 rounded-full mix-blend-screen filter blur-[4rem] opacity-40"></div>
                             <div className="absolute top-20 right-10 w-48 h-48 bg-teal-400 rounded-full mix-blend-screen filter blur-[4rem] opacity-20"></div>
                         </div>
 
                         {/* Right: Timeline */}
                         <div className="space-y-12 relative md:pl-10">
-                            {/* Connecting line */}
-                            <div className="absolute left-[23px] md:left-[63px] top-8 bottom-8 w-px bg-slate-700"></div>
+                            <div className="absolute left-[23px] md:left-[63px] top-8 bottom-8 w-px bg-purple-800"></div>
 
-                            {/* Step 1 */}
                             <div className="relative flex gap-6 md:gap-8 items-start">
-                                <div className="w-12 h-12 rounded-full border border-slate-600 bg-slate-800 flex items-center justify-center text-slate-400 font-bold text-lg z-10 shrink-0">1</div>
+                                <div className="w-12 h-12 rounded-full border border-purple-700 bg-purple-900/60 flex items-center justify-center text-purple-300 font-bold text-lg z-10 shrink-0">1</div>
                                 <div className="pt-2">
                                     <h3 className="text-xl font-bold text-slate-200 mb-2">Connect your mobile money</h3>
                                     <p className="text-slate-400 leading-relaxed text-sm md:text-base">Securely link your MTN or Airtel money account to start tracking your daily transactions.</p>
                                 </div>
                             </div>
 
-                            {/* Step 2 (Active) */}
                             <div className="relative flex gap-6 md:gap-8 items-start">
                                 <div className="w-12 h-12 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-lg z-10 shrink-0 shadow-[0_0_30px_rgba(16,185,129,0.5)]">2</div>
                                 <div className="pt-2">
@@ -92,11 +94,10 @@ export function HowItWorks({ onGetStarted }: HowItWorksProps) {
                                 </div>
                             </div>
 
-                            {/* Step 3 */}
                             <div className="relative flex gap-6 md:gap-8 items-start">
-                                <div className="w-12 h-12 rounded-full border border-slate-600 bg-slate-800 flex items-center justify-center text-slate-400 font-bold text-lg z-10 shrink-0">3</div>
+                                <div className="w-12 h-12 rounded-full border border-purple-700 bg-purple-900/60 flex items-center justify-center text-purple-300 font-bold text-lg z-10 shrink-0">3</div>
                                 <div className="pt-2">
-                                    <h3 className="text-xl font-bold text-slate-200 mb-2">Unlock credit & loans</h3>
+                                    <h3 className="text-xl font-bold text-slate-200 mb-2">Unlock credit &amp; loans</h3>
                                     <p className="text-slate-400 leading-relaxed text-sm md:text-base">Access business loans and higher credit tiers based on your proven financial history.</p>
                                 </div>
                             </div>
@@ -112,7 +113,7 @@ export function HowItWorks({ onGetStarted }: HowItWorksProps) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 }

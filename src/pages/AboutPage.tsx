@@ -12,7 +12,7 @@ export function AboutPage({ setActiveTab }: { setActiveTab: (tab: TabName) => vo
             </div>
 
             {/* Hero Section */}
-            <div className="relative bg-slate-900 pt-32 pb-48 overflow-hidden z-10">
+            <div className="relative bg-slate-900 pt-32 pb-24 overflow-hidden z-10">
                 <div className="absolute inset-0 z-0">
                     <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px]"></div>
                     <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px]"></div>
@@ -54,7 +54,7 @@ export function AboutPage({ setActiveTab }: { setActiveTab: (tab: TabName) => vo
             </div>
 
             {/* Content Sections */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 relative z-20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 relative z-20">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* Why Finui */}
                     <motion.div
