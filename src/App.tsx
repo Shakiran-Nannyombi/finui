@@ -474,7 +474,6 @@ function LandingPage({ onGetStarted }: { onGetStarted: () => void }) {
       </div>
     </div>
   </div>
-  </div>
 );
 }
 
