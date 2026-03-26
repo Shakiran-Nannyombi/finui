@@ -18,43 +18,60 @@ interface Transaction {
 interface User {
   id: string;
   name: string;
+  email: string;
   balance: number;
   savingsBalance: number;
   creditTier: number;
+  phone: string;
+  businessType: string;
 }
 
 const users: Record<string, User> = {
-  'user-1': { id: 'user-1', name: 'Amina', balance: 1500, savingsBalance: 300, creditTier: 1 }
+  'user-1': { id: 'user-1', name: 'Amina N.', email: 'amina@demo.com', balance: 150000, savingsBalance: 450000, creditTier: 2, phone: '+256 772 123 456', businessType: 'Market Vendor' },
+  'user-2': { id: 'user-2', name: 'Kato E.', email: 'kato@demo.com', balance: 50000, savingsBalance: 12000, creditTier: 1, phone: '+256 752 987 654', businessType: 'Boda Boda Rider' },
+  'user-3': { id: 'user-3', name: 'Sarah M.', email: 'sarah@demo.com', balance: 850000, savingsBalance: 2100000, creditTier: 4, phone: '+256 782 456 789', businessType: 'Tailoring Shop' }
 };
 
-const generateSampleTransactions = (userId: string): Transaction[] => {
+const generateSampleTransactions = (userId: string, baseIncome: number, baseExpense: number): Transaction[] => {
   const txs: Transaction[] = [];
   const now = new Date();
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 60; i++) { // 60 days of data
     const date = new Date(now);
     date.setDate(date.getDate() - i);
     
     // Income (e.g., daily wages, sales)
-    if (Math.random() > 0.3) {
+    if (Math.random() > 0.2) { // 80% chance of income on a given day
       txs.push({
-        id: `tx-in-${i}`,
+        id: `tx-in-${userId}-${i}`,
         userId,
-        amount: Math.floor(Math.random() * 500) + 100,
+        amount: Math.floor(Math.random() * baseIncome) + (baseIncome * 0.5),
         type: 'credit',
-        category: 'Income',
+        category: 'Daily Sales',
         date: date.toISOString()
       });
     }
     
     // Expenses
-    if (Math.random() > 0.2) {
+    if (Math.random() > 0.3) { // 70% chance of expense
       txs.push({
-        id: `tx-out-${i}`,
+        id: `tx-out-${userId}-${i}-1`,
         userId,
-        amount: Math.floor(Math.random() * 300) + 50,
+        amount: Math.floor(Math.random() * baseExpense) + (baseExpense * 0.2),
         type: 'debit',
-        category: 'Food/Supplies',
-        date: date.toISOString()
+        category: 'Inventory/Supplies',
+        date: new Date(date.getTime() + 1000 * 60 * 60 * 2).toISOString() // 2 hours later
+      });
+    }
+
+    // Personal Expenses
+    if (Math.random() > 0.5) {
+      txs.push({
+        id: `tx-out-${userId}-${i}-2`,
+        userId,
+        amount: Math.floor(Math.random() * 15000) + 5000,
+        type: 'debit',
+        category: 'Food & Transport',
+        date: new Date(date.getTime() + 1000 * 60 * 60 * 8).toISOString() // 8 hours later
       });
     }
   }
@@ -62,7 +79,9 @@ const generateSampleTransactions = (userId: string): Transaction[] => {
 };
 
 const transactions: Record<string, Transaction[]> = {
-  'user-1': generateSampleTransactions('user-1')
+  'user-1': generateSampleTransactions('user-1', 40000, 20000), // Amina: Market Vendor
+  'user-2': generateSampleTransactions('user-2', 25000, 10000), // Kato: Boda Boda
+  'user-3': generateSampleTransactions('user-3', 120000, 60000) // Sarah: Tailor
 };
 
 // --- Trust Score Engine ---
@@ -71,7 +90,7 @@ const calculateTrustScore = (userId: string) => {
   
   // 1. Regularity (frequency of income)
   const incomeTxs = userTxs.filter(t => t.type === 'credit');
-  const regularityScore = Math.min(100, (incomeTxs.length / 30) * 100 * 1.5); // Expecting ~20 income days
+  const regularityScore = Math.min(100, (incomeTxs.length / 60) * 100 * 1.2); // Expecting ~50 income days in 60 days
   
   // 2. Consistency (variance in income)
   const incomeAmounts = incomeTxs.map(t => t.amount);
@@ -88,6 +107,11 @@ const calculateTrustScore = (userId: string) => {
   
   const overallScore = Math.round((regularityScore * 0.4) + (consistencyScore * 0.3) + (stabilityScore * 0.3));
   
+  let recommendation = "Keep saving consistently to unlock credit.";
+  if (overallScore > 85) recommendation = "Excellent! You are eligible for Tier 3 Micro-Credit (Up to UGX 500,000).";
+  else if (overallScore > 70) recommendation = "Great job! You are eligible for Tier 2 Micro-Credit (Up to UGX 200,000).";
+  else if (overallScore > 50) recommendation = "You're on track. Eligible for Tier 1 Micro-Credit (Up to UGX 50,000).";
+
   return {
     overall: overallScore || 0,
     breakdown: {
@@ -95,11 +119,59 @@ const calculateTrustScore = (userId: string) => {
       consistency: Math.round(consistencyScore) || 0,
       stability: Math.round(stabilityScore) || 0
     },
-    recommendation: overallScore > 70 ? "Eligible for Tier 2 Micro-Credit" : "Keep saving consistently to unlock credit."
+    recommendation
   };
 };
 
 // --- API Endpoints ---
+
+// Auth Endpoints
+app.post('/api/auth/login', (req, res) => {
+  const { email, password } = req.body;
+  // Demo login: accept any password, match email to demo users or default to user-1
+  const user = Object.values(users).find(u => u.email.toLowerCase() === email.toLowerCase());
+  
+  if (user) {
+    res.json({ success: true, user });
+  } else if (email === 'demo@finui.com') {
+    res.json({ success: true, user: users['user-1'] });
+  } else {
+    res.status(401).json({ error: 'Invalid credentials. Try amina@demo.com, kato@demo.com, or sarah@demo.com' });
+  }
+});
+
+app.post('/api/auth/signup', (req, res) => {
+  const { name, email, phone, businessType } = req.body;
+  const newId = `user-${Date.now()}`;
+  const newUser: User = {
+    id: newId,
+    name,
+    email,
+    phone,
+    businessType,
+    balance: 0,
+    savingsBalance: 0,
+    creditTier: 1
+  };
+  users[newId] = newUser;
+  transactions[newId] = [];
+  res.json({ success: true, user: newUser });
+});
+
+app.put('/api/user/:id', (req, res) => {
+  const user = users[req.params.id];
+  if (!user) {
+    res.status(404).json({ error: 'User not found' });
+    return;
+  }
+  const { name, phone, businessType } = req.body;
+  if (name) user.name = name;
+  if (phone) user.phone = phone;
+  if (businessType) user.businessType = businessType;
+  
+  res.json({ success: true, user });
+});
+
 app.get('/api/user/:id', (req, res) => {
   const user = users[req.params.id];
   if (!user) {
@@ -151,10 +223,10 @@ app.get('/api/savings/recommendation/:userId', (req, res) => {
   
   if (recentIncome.length > 0) {
     const totalRecentIncome = recentIncome.reduce((a, b) => a + b.amount, 0);
-    const suggestedAmount = Math.round(totalRecentIncome * 0.1); // Suggest saving 10% of recent income
+    const suggestedAmount = Math.round((totalRecentIncome * 0.1) / 1000) * 1000; // Suggest saving 10% of recent income, rounded to nearest 1000 UGX
     res.json({
       suggestedAmount,
-      message: `You had a good income recently! Consider saving ${suggestedAmount} to build your Trust Score.`
+      message: `You had a good income recently! Consider saving UGX ${suggestedAmount.toLocaleString()} to build your Trust Score.`
     });
   } else {
     res.json({ suggestedAmount: 0, message: "Waiting for next income to suggest savings." });

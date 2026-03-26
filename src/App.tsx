@@ -32,9 +32,12 @@ const Footer = () => (
 interface User {
   id: string;
   name: string;
+  email: string;
   balance: number;
   savingsBalance: number;
   creditTier: number;
+  phone?: string;
+  businessType?: string;
 }
 
 interface Transaction {
@@ -107,6 +110,202 @@ function LandingPage({ onGetStarted }: { onGetStarted: () => void }) {
           <h3 className="text-xl font-bold text-gray-900 mb-3">Credit Unlocks</h3>
           <p className="text-gray-600 leading-relaxed">Level up your credit tiers by maintaining a good Trust Score and consistent savings habits.</p>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function AuthPage({ onLogin }: { onLogin: (user: User) => void }) {
+  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [businessType, setBusinessType] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+    try {
+      const endpoint = isLogin ? '/api/auth/login' : '/api/auth/signup';
+      const body = isLogin 
+        ? { email, password } 
+        : { name, email, phone, businessType, password };
+        
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      
+      const data = await res.json();
+      if (data.success) {
+        onLogin(data.user);
+      } else {
+        setError(data.error || 'Authentication failed');
+      }
+    } catch (err) {
+      setError('Network error occurred');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="max-w-md mx-auto px-4 py-12">
+      <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-black text-gray-900">{isLogin ? 'Welcome Back' : 'Create Account'}</h2>
+          <p className="text-gray-500 mt-2">{isLogin ? 'Log in to access your dashboard' : 'Join Finui to build your trust score'}</p>
+        </div>
+        
+        {error && (
+          <div className="bg-red-50 text-red-600 p-4 rounded-xl mb-6 text-sm font-medium flex items-center gap-2">
+            <AlertCircle size={16} /> {error}
+          </div>
+        )}
+        
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {!isLogin && (
+            <>
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-1">Full Name</label>
+                <input type="text" required value={name} onChange={e => setName(e.target.value)} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Amina N." />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-1">Phone Number</label>
+                <input type="tel" required value={phone} onChange={e => setPhone(e.target.value)} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="+256 700 000 000" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-1">Business Type</label>
+                <input type="text" required value={businessType} onChange={e => setBusinessType(e.target.value)} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Market Vendor" />
+              </div>
+            </>
+          )}
+          <div>
+            <label className="block text-sm font-bold text-gray-700 mb-1">Email Address</label>
+            <input type="email" required value={email} onChange={e => setEmail(e.target.value)} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="demo@finui.com" />
+          </div>
+          <div>
+            <label className="block text-sm font-bold text-gray-700 mb-1">Password</label>
+            <input type="password" required value={password} onChange={e => setPassword(e.target.value)} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="••••••••" />
+          </div>
+          
+          <button type="submit" disabled={loading} className="w-full bg-emerald-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-emerald-700 transition-all disabled:opacity-50 mt-4">
+            {loading ? 'Processing...' : (isLogin ? 'Log In' : 'Sign Up')}
+          </button>
+        </form>
+        
+        <div className="mt-6 text-center">
+          <button onClick={() => setIsLogin(!isLogin)} className="text-emerald-600 font-bold hover:underline">
+            {isLogin ? "Don't have an account? Sign up" : "Already have an account? Log in"}
+          </button>
+        </div>
+        
+        {isLogin && (
+          <div className="mt-8 pt-6 border-t border-gray-100">
+            <p className="text-sm text-gray-500 font-medium mb-3 text-center">Demo Accounts</p>
+            <div className="flex flex-col gap-2">
+              <button onClick={() => { setEmail('amina@demo.com'); setPassword('demo123'); }} className="text-xs bg-gray-50 p-2 rounded border border-gray-200 hover:bg-gray-100 text-left">
+                <span className="font-bold text-gray-900">Amina (Market Vendor)</span> - amina@demo.com
+              </button>
+              <button onClick={() => { setEmail('kato@demo.com'); setPassword('demo123'); }} className="text-xs bg-gray-50 p-2 rounded border border-gray-200 hover:bg-gray-100 text-left">
+                <span className="font-bold text-gray-900">Kato (Boda Boda)</span> - kato@demo.com
+              </button>
+              <button onClick={() => { setEmail('sarah@demo.com'); setPassword('demo123'); }} className="text-xs bg-gray-50 p-2 rounded border border-gray-200 hover:bg-gray-100 text-left">
+                <span className="font-bold text-gray-900">Sarah (Tailor)</span> - sarah@demo.com
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ProfileSettings({ user, onUpdate, onLogout }: { user: User, onUpdate: (u: User) => void, onLogout: () => void }) {
+  const [name, setName] = useState(user.name);
+  const [phone, setPhone] = useState(user.phone || '');
+  const [businessType, setBusinessType] = useState(user.businessType || '');
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setSuccess(false);
+    try {
+      const res = await fetch(`/api/user/${user.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, phone, businessType })
+      });
+      const data = await res.json();
+      if (data.success) {
+        onUpdate(data.user);
+        setSuccess(true);
+        setTimeout(() => setSuccess(false), 3000);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="max-w-2xl mx-auto px-4 py-12 space-y-8">
+      <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+        <div className="flex items-center gap-4 mb-8 pb-8 border-b border-gray-100">
+          <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl font-black">
+            {user.name.charAt(0)}
+          </div>
+          <div>
+            <h2 className="text-2xl font-black text-gray-900">{user.name}</h2>
+            <p className="text-gray-500 font-medium">{user.email}</p>
+            <div className="mt-2 inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold">
+              <ShieldCheck size={14} /> Tier {user.creditTier}
+            </div>
+          </div>
+        </div>
+
+        <form onSubmit={handleSave} className="space-y-6">
+          <h3 className="text-lg font-bold text-gray-900">Personal Information</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Full Name</label>
+              <input type="text" value={name} onChange={e => setName(e.target.value)} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Email Address</label>
+              <input type="email" value={user.email} disabled className="w-full p-3 bg-gray-100 border border-gray-200 rounded-xl text-gray-500 cursor-not-allowed" />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Phone Number</label>
+              <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Business Type</label>
+              <input type="text" value={businessType} onChange={e => setBusinessType(e.target.value)} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" />
+            </div>
+          </div>
+
+          <div className="pt-6 flex items-center justify-between border-t border-gray-100">
+            <button type="button" onClick={onLogout} className="text-red-600 font-bold hover:bg-red-50 px-4 py-2 rounded-lg transition-colors">
+              Log Out
+            </button>
+            <div className="flex items-center gap-4">
+              {success && <span className="text-emerald-600 font-bold text-sm">Saved successfully!</span>}
+              <button type="submit" disabled={loading} className="bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-emerald-700 transition-all disabled:opacity-50">
+                {loading ? 'Saving...' : 'Save Changes'}
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   );
@@ -479,30 +678,44 @@ function SavingsFlow({ user, onTransferSuccess }: { user: User | null, onTransfe
 }
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'landing' | 'home' | 'savings' | 'about' | 'profile'>('landing');
+  const [activeTab, setActiveTab] = useState<'landing' | 'home' | 'savings' | 'about' | 'profile' | 'auth'>('landing');
   const [user, setUser] = useState<User | null>(null);
   const [score, setScore] = useState<TrustScore | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
-  const fetchData = async () => {
+  const fetchData = async (userId: string) => {
     try {
       const [userRes, scoreRes, txRes] = await Promise.all([
-        fetch('/api/user/user-1'),
-        fetch('/api/trust-score/user-1'),
-        fetch('/api/transactions/user-1')
+        fetch(`/api/user/${userId}`),
+        fetch(`/api/trust-score/${userId}`),
+        fetch(`/api/transactions/${userId}`)
       ]);
       
-      setUser(await userRes.json());
-      setScore(await scoreRes.json());
-      setTransactions(await txRes.json());
+      if (userRes.ok) setUser(await userRes.json());
+      if (scoreRes.ok) setScore(await scoreRes.json());
+      if (txRes.ok) setTransactions(await txRes.json());
     } catch (err) {
       console.error("Failed to fetch data", err);
     }
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (user) {
+      fetchData(user.id);
+    }
+  }, [user?.id]);
+
+  const handleLogin = (loggedInUser: User) => {
+    setUser(loggedInUser);
+    setActiveTab('home');
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    setScore(null);
+    setTransactions([]);
+    setActiveTab('landing');
+  };
 
   return (
     <div className="min-h-screen bg-gray-50/50 font-sans text-gray-900 flex flex-col">
@@ -537,36 +750,52 @@ export default function App() {
                 <Info size={18} />
                 About
               </button>
-              <button 
-                onClick={() => setActiveTab('home')} 
-                className={cn(
-                  "px-4 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2", 
-                  activeTab === 'home' ? "bg-emerald-50 text-emerald-700" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                )}
-              >
-                <LayoutDashboard size={18} />
-                Dashboard
-              </button>
-              <button 
-                onClick={() => setActiveTab('savings')} 
-                className={cn(
-                  "px-4 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2", 
-                  activeTab === 'savings' ? "bg-emerald-50 text-emerald-700" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                )}
-              >
-                <PiggyBank size={18} />
-                Savings
-              </button>
-              <button 
-                onClick={() => setActiveTab('profile')} 
-                className={cn(
-                  "px-4 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2", 
-                  activeTab === 'profile' ? "bg-emerald-50 text-emerald-700" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                )}
-              >
-                <UserIcon size={18} />
-                Profile
-              </button>
+              
+              {user ? (
+                <>
+                  <button 
+                    onClick={() => setActiveTab('home')} 
+                    className={cn(
+                      "px-4 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2", 
+                      activeTab === 'home' ? "bg-emerald-50 text-emerald-700" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    )}
+                  >
+                    <LayoutDashboard size={18} />
+                    Dashboard
+                  </button>
+                  <button 
+                    onClick={() => setActiveTab('savings')} 
+                    className={cn(
+                      "px-4 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2", 
+                      activeTab === 'savings' ? "bg-emerald-50 text-emerald-700" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    )}
+                  >
+                    <PiggyBank size={18} />
+                    Savings
+                  </button>
+                  <button 
+                    onClick={() => setActiveTab('profile')} 
+                    className={cn(
+                      "px-4 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2", 
+                      activeTab === 'profile' ? "bg-emerald-50 text-emerald-700" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    )}
+                  >
+                    <UserIcon size={18} />
+                    Profile
+                  </button>
+                </>
+              ) : (
+                <button 
+                  onClick={() => setActiveTab('auth')} 
+                  className={cn(
+                    "px-6 py-2.5 rounded-full text-sm font-bold transition-all flex items-center gap-2 ml-2", 
+                    activeTab === 'auth' ? "bg-emerald-700 text-white" : "bg-emerald-600 text-white hover:bg-emerald-700"
+                  )}
+                >
+                  <UserIcon size={18} />
+                  Log In
+                </button>
+              )}
             </div>
 
             {/* Mobile Menu Button (simplified) */}
@@ -584,18 +813,16 @@ export default function App() {
 
       {/* Main Content Area */}
       <main className="flex-1 pb-20 md:pb-8">
-        {activeTab === 'landing' && <LandingPage onGetStarted={() => setActiveTab('home')} />}
-        {activeTab === 'home' && <Dashboard user={user} score={score} transactions={transactions} />}
-        {activeTab === 'savings' && <SavingsFlow user={user} onTransferSuccess={fetchData} />}
+        {activeTab === 'landing' && <LandingPage onGetStarted={() => setActiveTab(user ? 'home' : 'auth')} />}
         {activeTab === 'about' && <AboutPage />}
-        {activeTab === 'profile' && (
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col items-center justify-center text-gray-500">
-            <div className="bg-white p-8 rounded-full shadow-sm border border-gray-100 mb-6">
-              <UserIcon size={64} className="text-gray-300" />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Profile Settings</h2>
-            <p className="text-gray-500">Account management features coming soon.</p>
-          </div>
+        {activeTab === 'auth' && !user && <AuthPage onLogin={handleLogin} />}
+        
+        {user && (
+          <>
+            {activeTab === 'home' && <Dashboard user={user} score={score} transactions={transactions} />}
+            {activeTab === 'savings' && <SavingsFlow user={user} onTransferSuccess={() => fetchData(user.id)} />}
+            {activeTab === 'profile' && <ProfileSettings user={user} onUpdate={setUser} onLogout={handleLogout} />}
+          </>
         )}
       </main>
 
@@ -625,38 +852,53 @@ export default function App() {
           <span className="text-[10px] font-bold">About</span>
         </button>
 
-        <button 
-          onClick={() => setActiveTab('home')}
-          className={cn(
-            "flex flex-col items-center gap-1 p-2 transition-colors",
-            activeTab === 'home' ? "text-emerald-600" : "text-gray-400 hover:text-gray-600"
-          )}
-        >
-          <LayoutDashboard size={24} className={activeTab === 'home' ? "fill-emerald-100" : ""} />
-          <span className="text-[10px] font-bold">Dashboard</span>
-        </button>
-        
-        <button 
-          onClick={() => setActiveTab('savings')}
-          className={cn(
-            "flex flex-col items-center gap-1 p-2 transition-colors",
-            activeTab === 'savings' ? "text-emerald-600" : "text-gray-400 hover:text-gray-600"
-          )}
-        >
-          <PiggyBank size={24} className={activeTab === 'savings' ? "fill-emerald-100" : ""} />
-          <span className="text-[10px] font-bold">Savings</span>
-        </button>
-        
-        <button 
-          onClick={() => setActiveTab('profile')}
-          className={cn(
-            "flex flex-col items-center gap-1 p-2 transition-colors",
-            activeTab === 'profile' ? "text-emerald-600" : "text-gray-400 hover:text-gray-600"
-          )}
-        >
-          <UserIcon size={24} className={activeTab === 'profile' ? "fill-emerald-100" : ""} />
-          <span className="text-[10px] font-bold">Profile</span>
-        </button>
+        {user ? (
+          <>
+            <button 
+              onClick={() => setActiveTab('home')}
+              className={cn(
+                "flex flex-col items-center gap-1 p-2 transition-colors",
+                activeTab === 'home' ? "text-emerald-600" : "text-gray-400 hover:text-gray-600"
+              )}
+            >
+              <LayoutDashboard size={24} className={activeTab === 'home' ? "fill-emerald-100" : ""} />
+              <span className="text-[10px] font-bold">Dashboard</span>
+            </button>
+            
+            <button 
+              onClick={() => setActiveTab('savings')}
+              className={cn(
+                "flex flex-col items-center gap-1 p-2 transition-colors",
+                activeTab === 'savings' ? "text-emerald-600" : "text-gray-400 hover:text-gray-600"
+              )}
+            >
+              <PiggyBank size={24} className={activeTab === 'savings' ? "fill-emerald-100" : ""} />
+              <span className="text-[10px] font-bold">Savings</span>
+            </button>
+            
+            <button 
+              onClick={() => setActiveTab('profile')}
+              className={cn(
+                "flex flex-col items-center gap-1 p-2 transition-colors",
+                activeTab === 'profile' ? "text-emerald-600" : "text-gray-400 hover:text-gray-600"
+              )}
+            >
+              <UserIcon size={24} className={activeTab === 'profile' ? "fill-emerald-100" : ""} />
+              <span className="text-[10px] font-bold">Profile</span>
+            </button>
+          </>
+        ) : (
+          <button 
+            onClick={() => setActiveTab('auth')}
+            className={cn(
+              "flex flex-col items-center gap-1 p-2 transition-colors",
+              activeTab === 'auth' ? "text-emerald-600" : "text-gray-400 hover:text-gray-600"
+            )}
+          >
+            <UserIcon size={24} className={activeTab === 'auth' ? "fill-emerald-100" : ""} />
+            <span className="text-[10px] font-bold">Login</span>
+          </button>
+        )}
       </div>
     </div>
   );
