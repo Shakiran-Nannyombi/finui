@@ -63,52 +63,262 @@ interface TrustScore {
 
 function LandingPage({ onGetStarted }: { onGetStarted: () => void }) {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
-      {/* Hero Section */}
-      <div className="relative bg-emerald-900 rounded-[3rem] overflow-hidden text-white p-10 md:p-20 flex flex-col items-center text-center shadow-2xl">
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
-          <div className="absolute -top-24 -left-24 w-96 h-96 bg-emerald-600 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse"></div>
-          <div className="absolute top-0 -right-24 w-96 h-96 bg-teal-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse" style={{ animationDelay: '2s' }}></div>
-          <div className="absolute -bottom-24 left-20 w-96 h-96 bg-green-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse" style={{ animationDelay: '4s' }}></div>
+    <div className="flex flex-col gap-24 pb-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 space-y-16 w-full">
+        {/* Hero Section */}
+        <div className="relative bg-emerald-900 rounded-[3rem] overflow-hidden text-white p-10 md:p-20 flex flex-col items-center text-center shadow-2xl">
+          <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+            <div className="absolute -top-24 -left-24 w-96 h-96 bg-emerald-600 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse"></div>
+            <div className="absolute top-0 -right-24 w-96 h-96 bg-teal-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse" style={{ animationDelay: '2s' }}></div>
+            <div className="absolute -bottom-24 left-20 w-96 h-96 bg-green-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse" style={{ animationDelay: '4s' }}></div>
+          </div>
+          <div className="relative z-10 max-w-3xl">
+            <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-6 leading-tight">
+              Financial Power for the <span className="text-emerald-300">Informal Economy</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-emerald-100 mb-10 font-medium">
+              Build your Trust Score, automate micro-savings, and unlock credit tiers without a traditional bank history.
+            </p>
+            <button 
+              onClick={onGetStarted}
+              className="bg-white text-emerald-900 px-8 py-4 rounded-full text-lg font-bold hover:bg-emerald-50 hover:scale-105 transition-all shadow-xl flex items-center gap-2 mx-auto"
+            >
+              Enter Dashboard <ArrowRight size={20} />
+            </button>
+          </div>
         </div>
-        <div className="relative z-10 max-w-3xl">
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-6 leading-tight">
-            Financial Power for the <span className="text-emerald-300">Informal Economy</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-emerald-100 mb-10 font-medium">
-            Build your Trust Score, automate micro-savings, and unlock credit tiers without a traditional bank history.
-          </p>
-          <button 
-            onClick={onGetStarted}
-            className="bg-white text-emerald-900 px-8 py-4 rounded-full text-lg font-bold hover:bg-emerald-50 hover:scale-105 transition-all shadow-xl flex items-center gap-2 mx-auto"
-          >
-            Enter Dashboard <ArrowRight size={20} />
-          </button>
+
+        {/* Features */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:border-emerald-200 transition-colors">
+            <div className="bg-emerald-100 w-14 h-14 rounded-2xl flex items-center justify-center text-emerald-600 mb-6">
+              <ShieldCheck size={28} />
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-3">Trust Score Engine</h3>
+            <p className="text-gray-600 leading-relaxed">We analyze your income regularity and savings stability to generate a reliable credit score.</p>
+          </div>
+          <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:border-emerald-200 transition-colors">
+            <div className="bg-blue-100 w-14 h-14 rounded-2xl flex items-center justify-center text-blue-600 mb-6">
+              <PiggyBank size={28} />
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-3">Micro-Savings</h3>
+            <p className="text-gray-600 leading-relaxed">Smart AI nudges help you save small amounts when you earn, building your wealth effortlessly.</p>
+          </div>
+          <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:border-emerald-200 transition-colors">
+            <div className="bg-purple-100 w-14 h-14 rounded-2xl flex items-center justify-center text-purple-600 mb-6">
+              <TrendingUp size={28} />
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-3">Credit Unlocks</h3>
+            <p className="text-gray-600 leading-relaxed">Level up your credit tiers by maintaining a good Trust Score and consistent savings habits.</p>
+          </div>
         </div>
       </div>
 
-      {/* Features */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:border-emerald-200 transition-colors">
-          <div className="bg-emerald-100 w-14 h-14 rounded-2xl flex items-center justify-center text-emerald-600 mb-6">
-            <ShieldCheck size={28} />
+      {/* How it Works Section */}
+      <div className="bg-[#0f172a] py-24 w-full relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="mb-16 md:text-left text-center">
+            <p className="text-slate-400 font-bold tracking-[0.2em] text-sm uppercase mb-4">How Finui Works</p>
+            <h2 className="text-4xl md:text-5xl font-black text-white max-w-2xl leading-tight">
+              Turn your daily hustle into <span className="text-emerald-400 font-serif italic font-normal">verifiable</span> financial power
+            </h2>
           </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-3">Trust Score Engine</h3>
-          <p className="text-gray-600 leading-relaxed">We analyze your income regularity and savings stability to generate a reliable credit score.</p>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Left: Phone Mockups */}
+            <div className="relative h-[500px] md:h-[600px] w-full flex items-center justify-center">
+              {/* Back phone */}
+              <div className="absolute left-0 md:left-10 top-12 w-64 h-[450px] md:h-[500px] bg-slate-800 rounded-[2.5rem] border-[8px] border-slate-700 shadow-2xl transform -rotate-6 opacity-60">
+                 <div className="p-6 space-y-4 mt-8">
+                   <div className="w-1/2 h-4 bg-slate-600 rounded-full"></div>
+                   <div className="w-full h-32 bg-slate-700 rounded-xl"></div>
+                   <div className="w-3/4 h-4 bg-slate-600 rounded-full"></div>
+                 </div>
+              </div>
+              
+              {/* Front phone */}
+              <div className="absolute right-0 md:right-10 z-10 w-72 h-[500px] md:h-[550px] bg-white rounded-[2.5rem] border-[8px] border-slate-800 shadow-2xl transform rotate-3 overflow-hidden flex flex-col">
+                {/* Notch */}
+                <div className="absolute top-0 inset-x-0 h-6 flex justify-center">
+                  <div className="w-32 h-6 bg-slate-800 rounded-b-3xl"></div>
+                </div>
+                {/* Screen Content */}
+                <div className="flex-1 p-6 pt-12 bg-gray-50 flex flex-col gap-4">
+                  <div className="text-center space-y-2 mt-4">
+                    <h4 className="font-bold text-gray-900 text-lg">Trust Score</h4>
+                    <div className="text-5xl font-black text-emerald-600">85<span className="text-xl text-gray-400">/100</span></div>
+                  </div>
+                  <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 space-y-3 mt-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-bold text-gray-500">Regularity</span>
+                      <span className="text-xs font-bold text-emerald-600">90%</span>
+                    </div>
+                    <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                      <div className="w-[90%] h-full bg-emerald-500"></div>
+                    </div>
+                  </div>
+                  <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-bold text-gray-500">Consistency</span>
+                      <span className="text-xs font-bold text-emerald-600">82%</span>
+                    </div>
+                    <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                      <div className="w-[82%] h-full bg-emerald-500"></div>
+                    </div>
+                  </div>
+                  <div className="mt-auto bg-emerald-100 p-4 rounded-2xl border border-emerald-200">
+                    <p className="text-sm font-bold text-emerald-800 text-center">Tier 2 Unlocked!</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Decorative glowing blobs */}
+              <div className="absolute bottom-10 left-10 w-48 h-48 bg-emerald-500 rounded-full mix-blend-screen filter blur-[4rem] opacity-40"></div>
+              <div className="absolute top-20 right-10 w-48 h-48 bg-teal-400 rounded-full mix-blend-screen filter blur-[4rem] opacity-20"></div>
+            </div>
+
+            {/* Right: Timeline */}
+            <div className="space-y-12 relative md:pl-10">
+              {/* Connecting line */}
+              <div className="absolute left-[23px] md:left-[63px] top-8 bottom-8 w-px bg-slate-700"></div>
+              
+              {/* Step 1 */}
+              <div className="relative flex gap-6 md:gap-8 items-start">
+                <div className="w-12 h-12 rounded-full border border-slate-600 bg-slate-800 flex items-center justify-center text-slate-400 font-bold text-lg z-10 shrink-0">1</div>
+                <div className="pt-2">
+                  <h3 className="text-xl font-bold text-slate-200 mb-2">Connect your mobile money</h3>
+                  <p className="text-slate-400 leading-relaxed text-sm md:text-base">Securely link your MTN or Airtel money account to start tracking your daily transactions.</p>
+                </div>
+              </div>
+              
+              {/* Step 2 (Active) */}
+              <div className="relative flex gap-6 md:gap-8 items-start">
+                <div className="w-12 h-12 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-lg z-10 shrink-0 shadow-[0_0_30px_rgba(16,185,129,0.5)]">2</div>
+                <div className="pt-2">
+                  <h3 className="text-xl font-bold text-emerald-400 mb-2">Build your Trust Score</h3>
+                  <p className="text-slate-300 leading-relaxed text-sm md:text-base">We analyze your income regularity and savings habits to generate a verifiable financial identity.</p>
+                </div>
+              </div>
+              
+              {/* Step 3 */}
+              <div className="relative flex gap-6 md:gap-8 items-start">
+                <div className="w-12 h-12 rounded-full border border-slate-600 bg-slate-800 flex items-center justify-center text-slate-400 font-bold text-lg z-10 shrink-0">3</div>
+                <div className="pt-2">
+                  <h3 className="text-xl font-bold text-slate-200 mb-2">Unlock credit & loans</h3>
+                  <p className="text-slate-400 leading-relaxed text-sm md:text-base">Access business loans and higher credit tiers based on your proven financial history.</p>
+                </div>
+              </div>
+              
+              <div className="pt-8 pl-18 md:pl-20">
+                <button onClick={onGetStarted} className="bg-emerald-400 hover:bg-emerald-300 text-slate-900 px-8 py-4 rounded-xl font-black text-sm tracking-widest uppercase transition-all shadow-[0_0_20px_rgba(52,211,153,0.4)] hover:shadow-[0_0_30px_rgba(52,211,153,0.6)] hover:-translate-y-1">
+                  Get Started
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:border-emerald-200 transition-colors">
-          <div className="bg-blue-100 w-14 h-14 rounded-2xl flex items-center justify-center text-blue-600 mb-6">
-            <PiggyBank size={28} />
-          </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-3">Micro-Savings</h3>
-          <p className="text-gray-600 leading-relaxed">Smart AI nudges help you save small amounts when you earn, building your wealth effortlessly.</p>
+      </div>
+
+      {/* Smart AI Section */}
+      <div className="bg-[#080c14] py-24 w-full relative overflow-hidden">
+        {/* Background elements */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-600/20 rounded-full mix-blend-screen filter blur-[100px]"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/20 rounded-full mix-blend-screen filter blur-[100px]"></div>
         </div>
-        <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:border-emerald-200 transition-colors">
-          <div className="bg-purple-100 w-14 h-14 rounded-2xl flex items-center justify-center text-purple-600 mb-6">
-            <TrendingUp size={28} />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
+            {/* Left: Floating Chat UI */}
+            <div className="relative h-[500px] w-full flex items-center justify-center order-2 lg:order-1">
+              {/* Main Chat Card */}
+              <div className="absolute z-20 w-80 bg-slate-800/80 backdrop-blur-xl rounded-3xl border border-slate-700 shadow-2xl p-6 transform -rotate-2 hover:rotate-0 transition-transform duration-500">
+                <div className="flex items-center gap-4 mb-6 border-b border-slate-700 pb-4">
+                  <div className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center">
+                    <PiggyBank size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold">Finui AI</h4>
+                    <p className="text-emerald-400 text-xs">Online</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="bg-slate-700/50 rounded-2xl rounded-tl-sm p-4 text-sm text-slate-200">
+                    Great day today! You earned UGX 45,000 more than your Tuesday average. 📈
+                  </div>
+                  <div className="bg-slate-700/50 rounded-2xl rounded-tl-sm p-4 text-sm text-slate-200">
+                    Should we save UGX 10,000 towards your "New Sewing Machine" goal?
+                  </div>
+                  <div className="flex justify-end">
+                    <div className="bg-emerald-600 rounded-2xl rounded-tr-sm p-4 text-sm text-white shadow-lg shadow-emerald-900/50">
+                      Yes, save it! 🎯
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating Element 1 */}
+              <div className="absolute z-30 -right-4 top-20 bg-white rounded-2xl p-4 shadow-xl border border-gray-100 transform rotate-6 animate-bounce" style={{ animationDuration: '3s' }}>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                    <TrendingUp size={16} className="text-green-600" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 font-bold">Goal Progress</p>
+                    <p className="text-sm font-black text-gray-900">65% Reached</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating Element 2 */}
+              <div className="absolute z-10 -left-8 bottom-20 bg-slate-800 rounded-2xl p-4 shadow-2xl border border-slate-700 transform -rotate-12">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-emerald-500/20 rounded-full flex items-center justify-center">
+                    <ShieldCheck size={16} className="text-emerald-400" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-400 font-bold">Trust Score</p>
+                    <p className="text-sm font-black text-emerald-400">+5 Points</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Text Content */}
+            <div className="space-y-8 order-1 lg:order-2">
+              <p className="text-emerald-400 font-bold tracking-[0.2em] text-sm uppercase">Smart Savings</p>
+              <h2 className="text-4xl md:text-5xl font-black text-white leading-tight">
+                An AI that understands your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">hustle.</span>
+              </h2>
+              <p className="text-slate-400 text-lg leading-relaxed">
+                Informal income is unpredictable. Our AI analyzes your daily cash flow and suggests comfortable micro-savings only on your good days.
+              </p>
+              
+              <ul className="space-y-6 mt-8">
+                <li className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0 mt-1">
+                    <TrendingUp size={20} className="text-emerald-400" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold text-lg">Income Detection</h4>
+                    <p className="text-slate-400 text-sm mt-1">Automatically identifies high-earning days vs slow days.</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center shrink-0 mt-1">
+                    <PiggyBank size={20} className="text-blue-400" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold text-lg">Painless Saving</h4>
+                    <p className="text-slate-400 text-sm mt-1">Suggests saving amounts that won't hurt your daily operations.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
           </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-3">Credit Unlocks</h3>
-          <p className="text-gray-600 leading-relaxed">Level up your credit tiers by maintaining a good Trust Score and consistent savings habits.</p>
         </div>
       </div>
     </div>
