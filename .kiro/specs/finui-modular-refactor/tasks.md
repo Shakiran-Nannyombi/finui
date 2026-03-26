@@ -11,38 +11,38 @@ Incrementally extract the monolithic `src/App.tsx` (1612 lines) into the modular
   - Create `src/lib/utils.ts` with the `cn()` utility (clsx + twMerge)
   - Create `src/components/ui/Logo.tsx` extracting the SVG Logo component from `App.tsx`
 
-- [ ] 2. Extract layout components
+- [x] 2. Extract layout components
   - [x] 2.1 Create `src/components/layout/Footer.tsx`
     - Extract the `Footer` component verbatim from `App.tsx`
     - Import `Logo` from `components/ui/Logo`
-  - [-] 2.2 Create `src/components/layout/Navbar.tsx`
+  - [x] 2.2 Create `src/components/layout/Navbar.tsx`
     - Implement `NavbarProps` interface (`activeTab`, `user`, `onTabChange`) as defined in design
     - Extract desktop nav logic from `App.tsx`, rendering public and authenticated links conditionally
-  - [~] 2.3 Create `src/components/layout/MobileNav.tsx`
+  - [x] 2.3 Create `src/components/layout/MobileNav.tsx`
     - Implement `MobileNavProps` interface (`activeTab`, `user`, `onTabChange`) as defined in design
     - Extract fixed bottom mobile nav from `App.tsx`
 
-- [ ] 3. Extract hooks
-  - [~] 3.1 Create `src/hooks/useAppState.ts`
+- [x] 3. Extract hooks
+  - [x] 3.1 Create `src/hooks/useAppState.ts`
     - Implement all state: `activeTab`, `user`, `score`, `transactions`
     - Implement `handleLogin(user)` → sets user + navigates to `'home'`
     - Implement `handleLogout()` → clears user/score/transactions + navigates to `'landing'`
-  - [~] 3.2 Create `src/hooks/useUserData.ts`
+  - [x] 3.2 Create `src/hooks/useUserData.ts`
     - Accept `setUser`, `setScore`, `setTransactions` as parameters
     - Implement `fetchData(userId)` using `Promise.all` for parallel API calls
     - Each setter called independently based on `res.ok` check; errors logged to console
 
 - [ ] 4. Extract landing page sections
-  - [~] 4.1 Create `src/components/landing/HeroSection.tsx`
+  - [x] 4.1 Create `src/components/landing/HeroSection.tsx`
     - Extract hero banner with animated blobs and CTA button
     - Props: `{ onGetStarted: () => void }`
-  - [~] 4.2 Create `src/components/landing/FeaturesGrid.tsx`
+  - [x] 4.2 Create `src/components/landing/FeaturesGrid.tsx`
     - Extract bento grid (Trust Score Engine, Micro-Savings, Credit Unlocks cards)
     - Props: none (purely presentational)
-  - [~] 4.3 Create `src/components/landing/HowItWorks.tsx`
+  - [x] 4.3 Create `src/components/landing/HowItWorks.tsx`
     - Extract dark section with phone mockups and timeline steps
     - Props: `{ onGetStarted: () => void }`
-  - [~] 4.4 Create `src/components/landing/SmartAISection.tsx`
+  - [-] 4.4 Create `src/components/landing/SmartAISection.tsx`
     - Extract dark section with floating chat UI mockup
     - Props: none (purely presentational)
   - [~] 4.5 Create `src/components/landing/CTASection.tsx`
