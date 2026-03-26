@@ -32,7 +32,7 @@ Incrementally extract the monolithic `src/App.tsx` (1612 lines) into the modular
     - Implement `fetchData(userId)` using `Promise.all` for parallel API calls
     - Each setter called independently based on `res.ok` check; errors logged to console
 
-- [ ] 4. Extract landing page sections
+- [x] 4. Extract landing page sections
   - [x] 4.1 Create `src/components/landing/HeroSection.tsx`
     - Extract hero banner with animated blobs and CTA button
     - Props: `{ onGetStarted: () => void }`
@@ -42,27 +42,27 @@ Incrementally extract the monolithic `src/App.tsx` (1612 lines) into the modular
   - [x] 4.3 Create `src/components/landing/HowItWorks.tsx`
     - Extract dark section with phone mockups and timeline steps
     - Props: `{ onGetStarted: () => void }`
-  - [-] 4.4 Create `src/components/landing/SmartAISection.tsx`
+  - [x] 4.4 Create `src/components/landing/SmartAISection.tsx`
     - Extract dark section with floating chat UI mockup
     - Props: none (purely presentational)
-  - [~] 4.5 Create `src/components/landing/CTASection.tsx`
+  - [x] 4.5 Create `src/components/landing/CTASection.tsx`
     - Extract bottom CTA banner
     - Props: none (uses `window.location.hash` internally as in original)
-  - [~] 4.6 Create `src/pages/LandingPage.tsx`
+  - [x] 4.6 Create `src/pages/LandingPage.tsx`
     - Compose all five landing section components in order
     - Props: `{ onGetStarted: () => void }`
 
 - [ ] 5. Extract dashboard components and page
-  - [~] 5.1 Create `src/components/dashboard/DashboardHeader.tsx`
+  - [x] 5.1 Create `src/components/dashboard/DashboardHeader.tsx`
     - Implement `DashboardHeaderProps` (`user`, `transactions`, `score`)
     - Encapsulate `handleDownloadReport` logic internally
-  - [~] 5.2 Create `src/components/dashboard/TrustScoreCard.tsx`
+  - [x] 5.2 Create `src/components/dashboard/TrustScoreCard.tsx`
     - Implement `TrustScoreCardProps` (`score`, `creditTier`)
     - Include recharts `PieChart`, breakdown progress bars, and AI recommendation text
-  - [~] 5.3 Create `src/components/dashboard/TransactionList.tsx`
+  - [x] 5.3 Create `src/components/dashboard/TransactionList.tsx`
     - Implement `TransactionListProps` (`transactions`)
     - Slice to 6 most recent items; apply credit/debit color coding
-  - [~] 5.4 Create `src/pages/Dashboard.tsx`
+  - [-] 5.4 Create `src/pages/Dashboard.tsx`
     - Compose `DashboardHeader`, `TrustScoreCard`, `TransactionList`
     - Props: `{ user: User, score: TrustScore | null, transactions: Transaction[] }`
 
