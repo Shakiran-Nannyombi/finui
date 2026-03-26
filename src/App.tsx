@@ -8,6 +8,26 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+const Logo = ({ className }: { className?: string }) => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <path d="M16 2L2 9L16 16L30 9L16 2Z" fill="#10B981"/>
+    <path d="M2 23L16 30L30 23V9L16 16L2 9V23Z" fill="#059669"/>
+    <path d="M16 16L30 9V23L16 30V16Z" fill="#047857"/>
+  </svg>
+);
+
+const Footer = () => (
+  <footer className="bg-white border-t border-gray-200 mt-auto py-8 pb-24 md:pb-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div className="flex items-center gap-2">
+        <Logo className="w-6 h-6" />
+        <span className="text-lg font-black tracking-tight text-gray-900">Finui</span>
+      </div>
+      <p className="text-sm text-gray-500">© {new Date().getFullYear()} Finui Financial. All rights reserved.</p>
+    </div>
+  </footer>
+);
+
 // --- Types ---
 interface User {
   id: string;
@@ -165,7 +185,7 @@ function Dashboard({ user, score, transactions }: { user: User | null, score: Tr
         </div>
         <div className="bg-white/20 rounded-2xl p-6 backdrop-blur-sm min-w-[280px] border border-white/10">
           <p className="text-emerald-100 text-sm mb-2 font-medium">Total Available Balance</p>
-          <h2 className="text-4xl font-bold">KES {user.balance.toLocaleString()}</h2>
+          <h2 className="text-4xl font-bold">UGX {user.balance.toLocaleString()}</h2>
         </div>
       </div>
 
@@ -279,7 +299,7 @@ function Dashboard({ user, score, transactions }: { user: User | null, score: Tr
                   "font-bold whitespace-nowrap",
                   tx.type === 'credit' ? "text-emerald-600" : "text-gray-900"
                 )}>
-                  {tx.type === 'credit' ? '+' : '-'} KES {tx.amount}
+                  {tx.type === 'credit' ? '+' : '-'} UGX {tx.amount}
                 </span>
               </div>
             ))}
@@ -359,7 +379,7 @@ function SavingsFlow({ user, onTransferSuccess }: { user: User | null, onTransfe
                   <h3 className="text-lg font-medium text-emerald-50">Total Savings</h3>
                 </div>
               </div>
-              <p className="text-5xl font-black mb-6 tracking-tight">KES {user.savingsBalance.toLocaleString()}</p>
+              <p className="text-5xl font-black mb-6 tracking-tight">UGX {user.savingsBalance.toLocaleString()}</p>
               <div className="bg-white/10 rounded-xl p-4 backdrop-blur-md border border-white/10">
                 <p className="text-sm text-emerald-50 leading-relaxed">
                   Saving consistently increases your Trust Score and unlocks higher credit tiers. You are currently on Tier {user.creditTier}.
@@ -382,7 +402,7 @@ function SavingsFlow({ user, onTransferSuccess }: { user: User | null, onTransfe
                     onClick={() => setAmount(recommendation.suggestedAmount.toString())}
                     className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors shadow-sm"
                   >
-                    Save KES {recommendation.suggestedAmount} Now
+                    Save UGX {recommendation.suggestedAmount} Now
                   </button>
                 </div>
               </div>
@@ -408,9 +428,9 @@ function SavingsFlow({ user, onTransferSuccess }: { user: User | null, onTransfe
           
           <div className="space-y-8">
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">Amount to Save (KES)</label>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Amount to Save (UGX)</label>
               <div className="relative">
-                <span className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-500 font-bold text-lg">KES</span>
+                <span className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-500 font-bold text-lg">UGX</span>
                 <input 
                   type="number" 
                   value={amount}
@@ -420,7 +440,7 @@ function SavingsFlow({ user, onTransferSuccess }: { user: User | null, onTransfe
                 />
               </div>
               <div className="flex justify-between items-center mt-3">
-                <p className="text-sm text-gray-500 font-medium">Available balance: <span className="text-gray-900">KES {user.balance.toLocaleString()}</span></p>
+                <p className="text-sm text-gray-500 font-medium">Available balance: <span className="text-gray-900">UGX {user.balance.toLocaleString()}</span></p>
                 <button onClick={() => setAmount(user.balance.toString())} className="text-sm text-emerald-600 font-bold hover:text-emerald-700">Max</button>
               </div>
             </div>
@@ -485,15 +505,13 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50/50 font-sans text-gray-900">
+    <div className="min-h-screen bg-gray-50/50 font-sans text-gray-900 flex flex-col">
       {/* Top Navigation */}
       <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-20">
             <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveTab('landing')}>
-              <div className="bg-emerald-600 p-2.5 rounded-xl text-white shadow-md shadow-emerald-200">
-                <TrendingUp size={28} strokeWidth={2.5} />
-              </div>
+              <Logo />
               <span className="text-2xl font-black tracking-tight text-gray-900">Finui</span>
             </div>
             
@@ -508,6 +526,16 @@ export default function App() {
               >
                 <Home size={18} />
                 Home
+              </button>
+              <button 
+                onClick={() => setActiveTab('about')} 
+                className={cn(
+                  "px-4 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2", 
+                  activeTab === 'about' ? "bg-emerald-50 text-emerald-700" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                )}
+              >
+                <Info size={18} />
+                About
               </button>
               <button 
                 onClick={() => setActiveTab('home')} 
@@ -528,16 +556,6 @@ export default function App() {
               >
                 <PiggyBank size={18} />
                 Savings
-              </button>
-              <button 
-                onClick={() => setActiveTab('about')} 
-                className={cn(
-                  "px-4 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2", 
-                  activeTab === 'about' ? "bg-emerald-50 text-emerald-700" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                )}
-              >
-                <Info size={18} />
-                About
               </button>
               <button 
                 onClick={() => setActiveTab('profile')} 
@@ -565,7 +583,7 @@ export default function App() {
       </nav>
 
       {/* Main Content Area */}
-      <main className="pb-20 md:pb-8">
+      <main className="flex-1 pb-20 md:pb-8">
         {activeTab === 'landing' && <LandingPage onGetStarted={() => setActiveTab('home')} />}
         {activeTab === 'home' && <Dashboard user={user} score={score} transactions={transactions} />}
         {activeTab === 'savings' && <SavingsFlow user={user} onTransferSuccess={fetchData} />}
@@ -581,6 +599,8 @@ export default function App() {
         )}
       </main>
 
+      <Footer />
+
       {/* Mobile Bottom Navigation (Only visible on small screens) */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-3 flex justify-between items-center z-50 pb-safe">
         <button 
@@ -592,6 +612,17 @@ export default function App() {
         >
           <Home size={24} className={activeTab === 'landing' ? "fill-emerald-100" : ""} />
           <span className="text-[10px] font-bold">Home</span>
+        </button>
+
+        <button 
+          onClick={() => setActiveTab('about')}
+          className={cn(
+            "flex flex-col items-center gap-1 p-2 transition-colors",
+            activeTab === 'about' ? "text-emerald-600" : "text-gray-400 hover:text-gray-600"
+          )}
+        >
+          <Info size={24} className={activeTab === 'about' ? "fill-emerald-100" : ""} />
+          <span className="text-[10px] font-bold">About</span>
         </button>
 
         <button 
@@ -616,17 +647,6 @@ export default function App() {
           <span className="text-[10px] font-bold">Savings</span>
         </button>
         
-        <button 
-          onClick={() => setActiveTab('about')}
-          className={cn(
-            "flex flex-col items-center gap-1 p-2 transition-colors",
-            activeTab === 'about' ? "text-emerald-600" : "text-gray-400 hover:text-gray-600"
-          )}
-        >
-          <Info size={24} className={activeTab === 'about' ? "fill-emerald-100" : ""} />
-          <span className="text-[10px] font-bold">About</span>
-        </button>
-
         <button 
           onClick={() => setActiveTab('profile')}
           className={cn(
